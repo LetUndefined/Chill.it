@@ -2,6 +2,7 @@
 import { useSupaStore } from '@/stores/supaBase'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
+import router from '@/router'
 
 const supaStore = useSupaStore()
 const { formData, photoPreview, photoFile } = storeToRefs(supaStore)
@@ -23,6 +24,7 @@ function handlePhotoCapture(event: Event) {
 async function insertFormData() {
   await insertData()
   formData.value = resetValues
+  router.go(-1)
 }
 </script>
 

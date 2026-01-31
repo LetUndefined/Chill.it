@@ -32,7 +32,7 @@ export const useSupaStore = defineStore('supaStore', () => {
     let imageUrl = ''
 
     if (photoFile.value) {
-      const fileName = `public/${Date.now()}-${photoFile.value}`
+      const fileName = `public/${Date.now()}-${photoFile.value.name}`
 
       const { error: uploadError } = await supabase.storage
         .from('chill-spots-images')
