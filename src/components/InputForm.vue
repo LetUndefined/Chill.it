@@ -25,7 +25,7 @@ async function insertFormData() {
   await insertData()
   formData.value = resetValues
   router.go(-1)
-}
+} 
 </script>
 
 <template>
