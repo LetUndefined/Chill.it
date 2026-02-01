@@ -2,10 +2,11 @@ import { ref, type Ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import L from 'leaflet'
 import type { Latlng, GeolocationCoordinates } from '@/models/interface'
-import currentLocationIcon from '@/assets/icons/current_location.svg'
 import { createApp } from 'vue'
 import PopupComponent from '@/components/PopupComponent.vue'
 import { useSupaStore } from './supaBase'
+import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
+import { addPosition } from '@/config/mapIcons'
 
 export const useMapStore = defineStore('map', () => {
   const supaStore = useSupaStore()
@@ -26,14 +27,6 @@ export const useMapStore = defineStore('map', () => {
     speed: null,
   })
 
-  const myIcon = L.icon({
-    iconUrl: currentLocationIcon,
-    iconSize: [32, 32],
-    iconAnchor: [16, 16],
-    popupAnchor: [0, -16],
-    className: 'current-position',
-  })
-
   const locationPopup = ref()
 
   function callMap() {
@@ -45,7 +38,7 @@ export const useMapStore = defineStore('map', () => {
       }).addTo(map.value)
 
       currentPosition.value = L.marker([coords.value.latitude, coords.value.longitude], {
-        icon: myIcon,
+        icon: currentPositionIcon,
       }).addTo(map.value)
     } else {
       console.log('Failed to load map')
@@ -69,7 +62,7 @@ export const useMapStore = defineStore('map', () => {
     }
     app.mount(container)
 
-    marker.value = L.marker(e).setLatLng(e).addTo(map.value)
+    marker.value = L.marker(e, { icon: addPosition }).setLatLng(e).addTo(map.value)
 
     locationPopup.value = L.popup().setContent(container)
     marker.value.bindPopup(locationPopup.value).openPopup()
@@ -78,7 +71,7 @@ export const useMapStore = defineStore('map', () => {
   function createExistingMarkers() {
     if (fetchedData.value) {
       existingMarkers.value = fetchedData.value?.map((e) => {
-        L.marker([e.latitude, e.longitude]).addTo(map.value)
+        L.marker([e.latitude, e.longitude], { icon: existingPositions }).addTo(map.value)
       })
     }
   }
