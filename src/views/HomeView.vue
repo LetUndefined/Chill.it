@@ -14,22 +14,27 @@ const supaStore = useSupaStore()
 const { fetchData } = supaStore
 
 onMounted(async () => {
-  navigator.geolocation.getCurrentPosition(async (pos: GeolocationPosition) => {
-    coords.value = {
-      latitude: pos.coords.latitude,
-      longitude: pos.coords.longitude,
-      accuracy: pos.coords.accuracy,
-      altitude: pos.coords.altitude,
-      altitudeAccuracy: pos.coords.altitudeAccuracy,
-      heading: pos.coords.heading,
-      speed: pos.coords.speed,
-    }
+  navigator.geolocation.getCurrentPosition(
+    async (pos: GeolocationPosition) => {
+      coords.value = {
+        latitude: pos.coords.latitude,
+        longitude: pos.coords.longitude,
+        accuracy: pos.coords.accuracy,
+        altitude: pos.coords.altitude,
+        altitudeAccuracy: pos.coords.altitudeAccuracy,
+        heading: pos.coords.heading,
+        speed: pos.coords.speed,
+      }
 
-    callMap()
-    map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
-    await fetchData()
-    createExistingMarkers()
-  })
+      callMap()
+      map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
+      await fetchData()
+      createExistingMarkers()
+    },
+    (error) => {
+      alert(`Geolocation error: ${error.message}`)
+    }
+  )
 })
 </script>
 
