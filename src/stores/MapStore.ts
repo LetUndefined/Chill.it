@@ -1,16 +1,21 @@
 import { ref, type Ref } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import L from 'leaflet'
 import type { Latlng, GeolocationCoordinates } from '@/models/interface'
 import currentLocationIcon from '@/assets/icons/current_location.svg'
 import { createApp } from 'vue'
 import PopupComponent from '@/components/PopupComponent.vue'
+import { useSupaStore } from './supaBase'
 
 export const useMapStore = defineStore('map', () => {
+  const supaStore = useSupaStore()
+  const { fetchedData, latLng } = storeToRefs(supaStore)
+
   const map = ref()
   const marker = ref()
   const popup = ref()
   const currentPosition = ref()
+  const existingMarkers = ref()
   const coords: Ref<GeolocationCoordinates> = ref({
     latitude: 0,
     longitude: 0,
@@ -57,6 +62,11 @@ export const useMapStore = defineStore('map', () => {
       lat: Number(e.lat.toFixed(2)),
       lng: Number(e.lng.toFixed(2)),
     })
+
+    latLng.value = {
+      lat: e.lat,
+      lng: e.lng,
+    }
     app.mount(container)
 
     marker.value = L.marker(e).setLatLng(e).addTo(map.value)
@@ -65,5 +75,13 @@ export const useMapStore = defineStore('map', () => {
     marker.value.bindPopup(locationPopup.value).openPopup()
   }
 
-  return { map, marker, popup, coords, callMap, setMarker }
+  function createExistingMarkers() {
+    if (fetchedData.value) {
+      existingMarkers.value = fetchedData.value?.map((e) => {
+        L.marker([e.latitude, e.longitude]).addTo(map.value)
+      })
+    }
+  }
+
+  return { map, marker, popup, coords, callMap, setMarker, createExistingMarkers }
 })

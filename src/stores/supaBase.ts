@@ -1,6 +1,11 @@
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
+import { type SupabaseTable } from '@/models/interface'
+import { id } from 'vuetify/locale'
+import { useMapStore } from './MapStore'
+import { map } from 'leaflet'
+import { type Latlng } from '@/models/interface'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -8,6 +13,11 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export const useSupaStore = defineStore('supaStore', () => {
+  const latLng: Ref<Latlng> = ref({
+    lat: 0,
+    lng: 0,
+  })
+
   const resetValues = {
     title: '',
     chill_level: 0,
@@ -25,10 +35,13 @@ export const useSupaStore = defineStore('supaStore', () => {
     accessibility: '',
   })
 
+  const fetchedData: Ref<SupabaseTable[] | null> = ref(null)
+
   const photoFile: Ref<File | null> = ref(null)
   const photoPreview = ref('')
 
   async function insertData() {
+    console.log(latLng)
     let imageUrl = ''
 
     if (photoFile.value) {
@@ -43,20 +56,62 @@ export const useSupaStore = defineStore('supaStore', () => {
         return
       }
 
-      const { data } = supabase.storage.from('chill-spots-images').getPublicUrl(fileName)
-
-      imageUrl = data.publicUrl
+      imageUrl = fileName
     }
 
     const { error: insertError } = await supabase.from('chill_spots').insert({
       ...formData.value,
       image_url: imageUrl,
+      latitude: latLng.value.lat,
+      longitude: latLng.value.lng,
     })
+
+    console.log('Marker added')
 
     if (insertError) {
       console.error('Insert failed:', insertError)
     }
   }
 
-  return { formData, insertData, photoFile, photoPreview, resetValues }
+  async function fetchData() {
+    const { data, error } = await supabase.from('chill_spots').select()
+
+    if (data) {
+      fetchedData.value = data.map((e) => {
+        const { data: imageData } = supabase.storage
+          .from('chill-spots-images')
+          .getPublicUrl(e.image_url)
+
+        const setMarker = {
+          id: e.id,
+          title: e.title,
+          chill_level: e.chill_level,
+          description: e.description,
+          visiting: e.visiting,
+          vibe: e.vibe,
+          accessibility: e.accessibility,
+          image_url: imageData.publicUrl,
+          latitude: e.latitude,
+          longitude: e.longitude,
+        }
+        console.log(setMarker)
+
+        return setMarker
+      })
+    }
+    if (error) {
+      throw error
+    }
+  }
+
+  return {
+    formData,
+    insertData,
+    photoFile,
+    photoPreview,
+    resetValues,
+    fetchData,
+    fetchedData,
+    latLng,
+  }
 })

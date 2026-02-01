@@ -4,13 +4,17 @@ import FooterComponent from '@/components/FooterComponent.vue'
 import { onMounted } from 'vue'
 import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
+import { useSupaStore } from '@/stores/supaBase'
 
 const mapStore = useMapStore()
 const { map, coords } = storeToRefs(mapStore)
-const { callMap, setMarker } = mapStore
+const { callMap, setMarker, createExistingMarkers } = mapStore
 
-onMounted(() => {
-  navigator.geolocation.getCurrentPosition((pos: GeolocationPosition) => {
+const supaStore = useSupaStore()
+const { fetchData } = supaStore
+
+onMounted(async () => {
+  navigator.geolocation.getCurrentPosition(async (pos: GeolocationPosition) => {
     coords.value = {
       latitude: pos.coords.latitude,
       longitude: pos.coords.longitude,
@@ -23,6 +27,8 @@ onMounted(() => {
 
     callMap()
     map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
+    await fetchData()
+    createExistingMarkers()
   })
 })
 </script>
