@@ -47,7 +47,9 @@ onMounted(async () => {
   <div class="home">
     <HeaderComponent />
     <main>
-      <InputForm />
+      <div class="modal-container">
+        <InputForm />
+      </div>
       <div id="map"></div>
       <div v-if="loading" class="loading-overlay">
         <div class="spinner"></div>
@@ -70,6 +72,14 @@ main {
   flex: 1;
   overflow: hidden;
   position: relative;
+}
+
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
 }
 
 #map {

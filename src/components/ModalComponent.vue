@@ -16,15 +16,16 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 <style scoped>
 .modal-container {
-  background-color: rgba(194, 194, 194, 0.513);
+  background-color: transparent;
   border-radius: 10px;
   display: flex;
   position: fixed;
   top: 0;
-  left: 0;
+  left: -100%;
   width: 100%;
   height: 100%;
   z-index: 1001;
+  animation: slideIn 0.4s ease-in-out;
 }
 
 .modal {
@@ -34,6 +35,7 @@ import { modalTrigger } from '@/services/ModalTrigger'
   justify-content: center;
   background: transparent;
   margin: 1rem;
+  overflow-y: auto;
 }
 
 .close {
@@ -52,7 +54,6 @@ import { modalTrigger } from '@/services/ModalTrigger'
   display: flex;
   position: relative;
   flex-direction: column;
-  overflow-y: auto;
   border-radius: 10px;
 }
 
@@ -73,6 +74,16 @@ import { modalTrigger } from '@/services/ModalTrigger'
   }
   50% {
     transform: translateY(-10px);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
 </style>
