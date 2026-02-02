@@ -72,6 +72,13 @@ export const useMapStore = defineStore('map', () => {
   }
 
   function createExistingMarkers() {
+    if (existingMarkers.value) {
+      existingMarkers.value.forEach((m) => {
+        map.value.removeLayer(m.marker)
+        map.value.removeLayer(m.circle)
+      })
+    }
+
     if (fetchedData.value) {
       existingMarkers.value = fetchedData.value?.map((e) => {
         const marker = L.marker([e.latitude, e.longitude], { icon: existingPositions }).addTo(
@@ -95,8 +102,8 @@ export const useMapStore = defineStore('map', () => {
           vibe: e.vibe,
           accessibility: e.accessibility,
           imageUrl: e.image_url,
-          latitude: e.latitude.toFixed(2),
-          longitude: e.longitude.toFixed(2),
+          latitude: Number(e.latitude.toFixed(2)),
+          longitude: Number(e.longitude.toFixed(2)),
         })
 
         app.mount(container)

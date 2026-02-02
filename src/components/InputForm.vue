@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { useSupaStore } from '@/stores/supaBase'
+import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import router from '@/router'
+import ModalComponent from './ModalComponent.vue'
+import { modalTrigger } from '@/services/ModalTrigger'
 
 const supaStore = useSupaStore()
 const { formData, photoPreview, photoFile } = storeToRefs(supaStore)
-const { insertData, resetValues } = supaStore
+const { insertData, resetValues, fetchData } = supaStore
+
+const mapStore = useMapStore()
+const { createExistingMarkers } = mapStore
 
 const photo = ref()
 
@@ -24,73 +29,81 @@ function handlePhotoCapture(event: Event) {
 async function insertFormData() {
   await insertData()
   formData.value = resetValues
-  router.go(-1)
+  await fetchData()
+  createExistingMarkers()
+}
+
+const handleSubmit = () => {
+  insertFormData()
+  modalTrigger.value = false
 }
 </script>
 
 <template>
-  <div class="form-container">
-    <h1>Information Input</h1>
-    <form @submit.prevent>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" placeholder="Enter your name" v-model="formData.title" />
-      </div>
+  <modal-component v-if="modalTrigger">
+    <div class="form-container">
+      <h1>Information Input</h1>
+      <form @submit.prevent>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" type="text" placeholder="Enter your name" v-model="formData.title" />
+        </div>
 
-      <div class="form-group">
-        <label for="email">Chill level</label>
-        <input id="email" type="text" v-model="formData.chill_level" />
-      </div>
+        <div class="form-group">
+          <label for="email">Chill level</label>
+          <input id="email" type="text" v-model="formData.chill_level" />
+        </div>
 
-      <div class="form-group">
-        <label for="message">Short description</label>
-        <textarea
-          type="textarea"
-          id="message"
-          rows="5"
-          cols="5"
-          placeholder="Enter your message"
-          v-model="formData.description"
-          maxlength="100"
-        ></textarea>
-      </div>
+        <div class="form-group">
+          <label for="message">Short description</label>
+          <textarea
+            type="textarea"
+            id="message"
+            rows="5"
+            cols="5"
+            placeholder="Enter your message"
+            v-model="formData.description"
+            maxlength="100"
+          ></textarea>
+        </div>
 
-      <div class="form-group">
-        <label for="message">Best visiting time</label>
-        <v-select
-          label="Select"
-          :items="['Morning', 'Noon', 'Afternoon', 'Evening', 'Night']"
-          variant="solo-filled"
-          v-model="formData.visiting"
-        ></v-select>
-      </div>
+        <div class="form-group">
+          <label for="message">Best visiting time</label>
+          <v-select
+            label="Select"
+            :items="['Morning', 'Noon', 'Afternoon', 'Evening', 'Night']"
+            variant="solo-filled"
+            v-model="formData.visiting"
+          ></v-select>
+        </div>
 
-      <div class="form-group">
-        <label for="message">Vibe</label>
-        <v-select
-          label="Select"
-          :items="['Quiet', 'Social', 'Romantic', 'Adventurous', 'Chill']"
-          variant="solo-filled"
-          v-model="formData.vibe"
-        ></v-select>
-      </div>
+        <div class="form-group">
+          <label for="message">Vibe</label>
+          <v-select
+            label="Select"
+            :items="['Quiet', 'Social', 'Romantic', 'Adventurous', 'Chill']"
+            variant="solo-filled"
+            v-model="formData.vibe"
+          ></v-select>
+        </div>
 
-      <div class="form-group">
-        <label for="message">Accessibility</label>
-        <v-select
-          label="Select"
-          :items="['Easy walk', 'Moderate walk', 'Hard to reach', 'Wheelchair accessible']"
-          variant="solo-filled"
-          v-model="formData.accessibility"
-        ></v-select>
-      </div>
+        <div class="form-group">
+          <label for="message">Accessibility</label>
+          <v-select
+            label="Select"
+            :items="['Easy walk', 'Moderate walk', 'Hard to reach', 'Wheelchair accessible']"
+            variant="solo-filled"
+            v-model="formData.accessibility"
+          ></v-select>
+        </div>
 
-      <button class="submit-btn" @click="insertFormData">Submit</button>
-    </form>
-    <div>
-      <input type="file" accept="image/*" capture="environment" @change="handlePhotoCapture" />
+        <button class="submit-btn" @click="handleSubmit">Submit</button>
+      </form>
+      <div>
+        <input type="file" accept="image/*" capture="environment" @change="handlePhotoCapture" />
+      </div>
     </div>
-  </div>
+  </modal-component>
 </template>
 
 <style scoped>
@@ -100,7 +113,6 @@ async function insertFormData() {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 500px;
 }
 
 h1 {

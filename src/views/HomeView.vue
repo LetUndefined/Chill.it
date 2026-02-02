@@ -5,6 +5,7 @@ import { onMounted } from 'vue'
 import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
 import { useSupaStore } from '@/stores/supaBase'
+import InputForm from '@/components/InputForm.vue'
 
 const mapStore = useMapStore()
 const { map, coords } = storeToRefs(mapStore)
@@ -42,6 +43,7 @@ onMounted(async () => {
   <div class="home">
     <HeaderComponent />
     <main>
+      <InputForm />
       <div id="map"></div>
     </main>
     <FooterComponent />

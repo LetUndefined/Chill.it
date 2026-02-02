@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import router from '@/router'
+import { modalTrigger } from '@/services/ModalTrigger'
 
 const props = defineProps<{
   lat: number
@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
   <div>
     <p>Coordinaten: latitude {{ props.lat }}, longitude {{ props.lng }}</p>
-    <button id="popup-button" @click="router.push({ name: 'input' })">Add location</button>
+    <button id="popup-button" @click="modalTrigger = true">Add location</button>
   </div>
 </template>
 
