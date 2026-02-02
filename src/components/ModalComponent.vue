@@ -19,7 +19,9 @@ import { modalTrigger } from '@/services/ModalTrigger'
   background-color: rgba(194, 194, 194, 0.513);
   border-radius: 10px;
   display: flex;
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 1001;
