@@ -86,8 +86,8 @@ export const useMapStore = defineStore('map', () => {
         )
 
         const circle = L.circle([e.latitude, e.longitude], {
-          color: 'blue',
-          fillColor: '#448be8',
+          color: 'gray',
+          fillColor: '#cccccc',
           fillOpacity: 0.3,
           radius: 100,
         }).addTo(map.value)
@@ -108,6 +108,13 @@ export const useMapStore = defineStore('map', () => {
 
         app.mount(container)
         circle.bindPopup(container)
+
+        setTimeout(() => {
+          circle.setStyle({
+            color: 'blue',
+            fillColor: '#448be8',
+          })
+        }, 100)
 
         return { marker, circle, data: e }
       })

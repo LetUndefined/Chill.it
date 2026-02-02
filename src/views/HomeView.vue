@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import FooterComponent from '@/components/FooterComponent.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
 import { useSupaStore } from '@/stores/supaBase'
@@ -13,6 +13,8 @@ const { callMap, setMarker, createExistingMarkers } = mapStore
 
 const supaStore = useSupaStore()
 const { fetchData } = supaStore
+
+const loading = ref(true)
 
 onMounted(async () => {
   navigator.geolocation.getCurrentPosition(
@@ -31,9 +33,11 @@ onMounted(async () => {
       map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
       await fetchData()
       createExistingMarkers()
+      loading.value = false
     },
     (error) => {
       alert(`Geolocation error: ${error.message}, Turn on Location in your settings`)
+      loading.value = false
     },
   )
 })
@@ -45,6 +49,9 @@ onMounted(async () => {
     <main>
       <InputForm />
       <div id="map"></div>
+      <div v-if="loading" class="loading-overlay">
+        <div class="spinner"></div>
+      </div>
     </main>
     <FooterComponent />
   </div>
@@ -69,5 +76,33 @@ main {
   width: 100%;
   height: 100%;
   background-color: #f0f0f0;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
