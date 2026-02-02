@@ -104,6 +104,13 @@ export const useSupaStore = defineStore('supaStore', () => {
     }
   }
 
+  async function deleteData(id: string) {
+    const { error } = await supabase.from('chill_spots').delete().eq('id', id)
+    if (error) {
+      console.error('Deleting failed')
+    }
+  }
+
   return {
     formData,
     insertData,
@@ -113,5 +120,6 @@ export const useSupaStore = defineStore('supaStore', () => {
     fetchData,
     fetchedData,
     latLng,
+    deleteData,
   }
 })

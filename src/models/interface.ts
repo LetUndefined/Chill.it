@@ -30,3 +30,9 @@ export interface SupabaseTable {
   latitude: number
   longitude: number
 }
+
+export interface ExistingMarker {
+  marker: L.Marker
+  circle: L.Circle
+  data: SupabaseTable
+}

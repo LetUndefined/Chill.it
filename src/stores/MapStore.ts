@@ -1,12 +1,19 @@
 import { ref, type Ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import L from 'leaflet'
-import type { Latlng, GeolocationCoordinates } from '@/models/interface'
+import type {
+  Latlng,
+  GeolocationCoordinates,
+  SupabaseTable,
+  ExistingMarker,
+} from '@/models/interface'
 import { createApp } from 'vue'
-import PopupComponent from '@/components/PopupComponent.vue'
+
 import { useSupaStore } from './supaBase'
 import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
 import { addPosition } from '@/config/mapIcons'
+import NewPopupComponent from '@/components/NewPopupComponent.vue'
+import ExistingPopupComponent from '@/components/ExistingPopupComponent.vue'
 
 export const useMapStore = defineStore('map', () => {
   const supaStore = useSupaStore()
@@ -14,9 +21,8 @@ export const useMapStore = defineStore('map', () => {
 
   const map = ref()
   const marker = ref()
-  const popup = ref()
-  const currentPosition = ref()
-  const existingMarkers = ref()
+  const existingMarkers: Ref<ExistingMarker[] | undefined> = ref()
+
   const coords: Ref<GeolocationCoordinates> = ref({
     latitude: 0,
     longitude: 0,
@@ -27,8 +33,6 @@ export const useMapStore = defineStore('map', () => {
     speed: null,
   })
 
-  const locationPopup = ref()
-
   function callMap() {
     if (coords.value.latitude && coords.value.longitude) {
       map.value = L.map('map').setView([coords.value.latitude, coords.value.longitude], 16)
@@ -37,7 +41,7 @@ export const useMapStore = defineStore('map', () => {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map.value)
 
-      currentPosition.value = L.marker([coords.value.latitude, coords.value.longitude], {
+      L.marker([coords.value.latitude, coords.value.longitude], {
         icon: currentPositionIcon,
       }).addTo(map.value)
     } else {
@@ -51,7 +55,7 @@ export const useMapStore = defineStore('map', () => {
     }
 
     const container = document.createElement('div')
-    const app = createApp(PopupComponent, {
+    const app = createApp(NewPopupComponent, {
       lat: Number(e.lat.toFixed(2)),
       lng: Number(e.lng.toFixed(2)),
     })
@@ -64,17 +68,64 @@ export const useMapStore = defineStore('map', () => {
 
     marker.value = L.marker(e, { icon: addPosition }).setLatLng(e).addTo(map.value)
 
-    locationPopup.value = L.popup().setContent(container)
-    marker.value.bindPopup(locationPopup.value).openPopup()
+    marker.value.bindPopup(L.popup().setContent(container)).openPopup()
   }
 
   function createExistingMarkers() {
     if (fetchedData.value) {
       existingMarkers.value = fetchedData.value?.map((e) => {
-        L.marker([e.latitude, e.longitude], { icon: existingPositions }).addTo(map.value)
+        const marker = L.marker([e.latitude, e.longitude], { icon: existingPositions }).addTo(
+          map.value,
+        )
+
+        const circle = L.circle([e.latitude, e.longitude], {
+          color: 'blue',
+          fillColor: '#448be8',
+          fillOpacity: 0.3,
+          radius: 100,
+        }).addTo(map.value)
+
+        const container = document.createElement('div')
+        const app = createApp(ExistingPopupComponent, {
+          id: e.id,
+          title: e.title,
+          chill_level: e.chill_level,
+          description: e.description,
+          visiting: e.visiting,
+          vibe: e.vibe,
+          accessibility: e.accessibility,
+          imageUrl: e.image_url,
+          latitude: e.latitude.toFixed(2),
+          longitude: e.longitude.toFixed(2),
+        })
+
+        app.mount(container)
+        circle.bindPopup(container)
+
+        return { marker, circle, data: e }
       })
     }
   }
 
-  return { map, marker, popup, coords, callMap, setMarker, createExistingMarkers }
+  function deleteExistingMarker(id: string) {
+    const markerObj = existingMarkers.value?.find((m) => m.data.id === id)
+
+    if (markerObj) {
+      map.value.removeLayer(markerObj.marker)
+      map.value.removeLayer(markerObj.circle)
+
+      existingMarkers.value = existingMarkers.value?.filter((m) => m.data.id !== id)
+      fetchedData.value = fetchedData.value?.filter((d) => d.id !== id) || null
+    }
+  }
+
+  return {
+    map,
+    marker,
+    coords,
+    callMap,
+    setMarker,
+    createExistingMarkers,
+    deleteExistingMarker,
+  }
 })

@@ -32,8 +32,8 @@ onMounted(async () => {
       createExistingMarkers()
     },
     (error) => {
-      alert(`Geolocation error: ${error.message}`)
-    }
+      alert(`Geolocation error: ${error.message}, Turn on Location in your settings`)
+    },
   )
 })
 </script>
