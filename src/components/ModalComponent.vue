@@ -5,9 +5,10 @@ import { modalTrigger } from '@/services/ModalTrigger'
 <template>
   <div class="modal-container">
     <div class="modal">
-      <div class="close" @click.prevent="modalTrigger = false">X</div>
       <div class="modal-content">
+        <div class="close" @click.prevent="modalTrigger = false">X</div>
         <slot></slot>
+        <div class="scroll-indicator">↓</div>
       </div>
     </div>
   </div>
@@ -18,14 +19,9 @@ import { modalTrigger } from '@/services/ModalTrigger'
   background-color: rgba(194, 194, 194, 0.513);
   border-radius: 10px;
   display: flex;
-  position: fixed;
-  top: 0;
-  left: 0;
+  position: absolute;
   width: 100%;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
+  height: 100%;
   z-index: 1001;
 }
 
@@ -33,11 +29,9 @@ import { modalTrigger } from '@/services/ModalTrigger'
   display: flex;
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 1rem;
+  justify-content: center;
   background: transparent;
+  margin: 1rem;
 }
 
 .close {
@@ -54,9 +48,29 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 .modal-content {
   display: flex;
+  position: relative;
   flex-direction: column;
   overflow-y: auto;
-  margin-bottom: 4rem;
   border-radius: 10px;
+}
+
+.scroll-indicator {
+  position: sticky;
+  bottom: 10px;
+  text-align: center;
+  font-size: 24px;
+  color: rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 </style>

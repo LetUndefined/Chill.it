@@ -62,6 +62,7 @@ main {
   margin-bottom: 50px;
   flex: 1;
   overflow: hidden;
+  position: relative;
 }
 
 #map {
