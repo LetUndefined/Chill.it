@@ -81,9 +81,10 @@ export const useMapStore = defineStore('map', () => {
 
     if (fetchedData.value) {
       existingMarkers.value = fetchedData.value?.map((e) => {
-        const marker = L.marker([e.latitude, e.longitude], { icon: existingPositions }).addTo(
-          map.value,
-        )
+        const marker = L.marker([e.latitude, e.longitude], {
+          icon: existingPositions,
+          interactive: false
+        }).addTo(map.value)
 
         const circle = L.circle([e.latitude, e.longitude], {
           color: 'gray',
