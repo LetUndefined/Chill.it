@@ -1,11 +1,7 @@
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
-import { type SupabaseTable } from '@/models/interface'
-import { id } from 'vuetify/locale'
-import { useMapStore } from './MapStore'
-import { map } from 'leaflet'
-import { type Latlng } from '@/models/interface'
+import { type SupabaseTable, type Latlng } from '@/models/interface'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -94,7 +90,6 @@ export const useSupaStore = defineStore('supaStore', () => {
           latitude: e.latitude,
           longitude: e.longitude,
         }
-        console.log(setMarker)
 
         return setMarker
       })

@@ -9,7 +9,7 @@ import InputForm from '@/components/InputForm.vue'
 
 const mapStore = useMapStore()
 const { map, coords } = storeToRefs(mapStore)
-const { callMap, setMarker, createExistingMarkers } = mapStore
+const { callMap, setMarker, createExistingMarkers, createWaypoint } = mapStore
 
 const supaStore = useSupaStore()
 const { fetchData } = supaStore

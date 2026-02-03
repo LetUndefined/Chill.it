@@ -6,7 +6,7 @@ const supaStore = useSupaStore()
 const { deleteData } = supaStore
 
 const mapStore = useMapStore()
-const { deleteExistingMarker } = mapStore
+const { deleteExistingMarker, createWaypoint } = mapStore
 
 const props = defineProps<{
   id: string
@@ -25,6 +25,10 @@ async function removeMarker() {
   await deleteData(props.id)
   deleteExistingMarker(props.id)
 }
+
+const createRoute = () => {
+  createWaypoint(props.latitude, props.longitude)
+}
 </script>
 
 <template>
@@ -35,28 +39,34 @@ async function removeMarker() {
     <p>{{ props.description }}</p>
     <p>Coordinates:</p>
     <p>{{ props.latitude }}, {{ props.longitude }}</p>
-    <button class="delete" @click="removeMarker">Delete</button>
+    <div class="buttons">
+      <button class="delete" @click="removeMarker">Delete</button>
+      <button class="route" @click="createRoute">Navigate</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-#popup-button {
-  padding: 8px 16px;
-  background: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 img {
   width: 200px;
   height: 100%;
   border-radius: 10px;
 }
-
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
 .delete {
   background-color: rgb(255, 0, 0);
+  color: white;
+  padding: 0.5rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px -2px black;
+}
+.route {
+  background-color: rgb(0, 68, 255);
   color: white;
   padding: 0.5rem 2rem;
   border-radius: 10px;
