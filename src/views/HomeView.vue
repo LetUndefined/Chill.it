@@ -125,11 +125,11 @@ main {
   position: absolute;
   z-index: 1000;
   top: 10px;
-  right: 20px;
+  right: 10px;
   display: flex;
   border-radius: 10px;
   padding: 2px;
-  animation: slideIn 0.3s ease-in-out;
+  animation: slideInRight 0.3s ease-in-out;
 }
 
 .cancel {
@@ -140,13 +140,5 @@ main {
   color: #ffffff;
 }
 
-@keyframes slideIn {
-  0% {
-    transform: translateX(200%);
-  }
 
-  100% {
-    transform: translateX(0);
-  }
-}
 </style>
