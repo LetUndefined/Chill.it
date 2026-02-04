@@ -1,13 +1,9 @@
 import { ref, type Ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import L from 'leaflet'
-import type {
-  Latlng,
-  GeolocationCoordinates,
-  SupabaseTable,
-  ExistingMarker,
-} from '@/models/interface'
+import type { Latlng, GeolocationCoordinates, ExistingMarker } from '@/models/interface'
 import { createApp } from 'vue'
+import 'leaflet-routing-machine'
 
 import { useSupaStore } from './supaBase'
 import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
@@ -22,6 +18,8 @@ export const useMapStore = defineStore('map', () => {
   const map = ref()
   const marker = ref()
   const existingMarkers: Ref<ExistingMarker[] | undefined> = ref()
+  const waypoint = ref()
+  const currentLocationMarker = ref()
 
   const coords: Ref<GeolocationCoordinates> = ref({
     latitude: 0,
@@ -41,9 +39,30 @@ export const useMapStore = defineStore('map', () => {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       }).addTo(map.value)
 
-      L.marker([coords.value.latitude, coords.value.longitude], {
+      currentLocationMarker.value = L.marker([coords.value.latitude, coords.value.longitude], {
         icon: currentPositionIcon,
       }).addTo(map.value)
+
+      map.value.locate({ watch: true })
+
+      map.value.on('locationfound', (e: L.LocationEvent) => {
+        coords.value = {
+          latitude: e.latlng.lat,
+          longitude: e.latlng.lng,
+          accuracy: e.accuracy,
+          altitude: e.altitude || 0,
+          altitudeAccuracy: e.altitudeAccuracy,
+          heading: e.heading,
+          speed: e.speed,
+        }
+
+        currentLocationMarker.value.setLatLng(e.latlng)
+
+        if (waypoint.value) {
+          const currentWaypoints = waypoint.value.getWaypoints()
+          waypoint.value.setWaypoints([e.latlng, currentWaypoints[1].latLng])
+        }
+      })
     } else {
       console.log('Failed to load map')
     }
@@ -56,8 +75,8 @@ export const useMapStore = defineStore('map', () => {
 
     const container = document.createElement('div')
     const app = createApp(NewPopupComponent, {
-      lat: Number(e.lat.toFixed(2)),
-      lng: Number(e.lng.toFixed(2)),
+      lat: Number(e.lat),
+      lng: Number(e.lng),
     })
 
     latLng.value = {
@@ -83,7 +102,7 @@ export const useMapStore = defineStore('map', () => {
       existingMarkers.value = fetchedData.value?.map((e) => {
         const marker = L.marker([e.latitude, e.longitude], {
           icon: existingPositions,
-          interactive: false
+          interactive: false,
         }).addTo(map.value)
 
         const circle = L.circle([e.latitude, e.longitude], {
@@ -103,8 +122,8 @@ export const useMapStore = defineStore('map', () => {
           vibe: e.vibe,
           accessibility: e.accessibility,
           imageUrl: e.image_url,
-          latitude: Number(e.latitude.toFixed(2)),
-          longitude: Number(e.longitude.toFixed(2)),
+          latitude: Number(e.latitude),
+          longitude: Number(e.longitude),
         })
 
         app.mount(container)
@@ -126,12 +145,38 @@ export const useMapStore = defineStore('map', () => {
     const markerObj = existingMarkers.value?.find((m) => m.data.id === id)
 
     if (markerObj) {
-      map.value.removeLayer(markerObj.marker)
-      map.value.removeLayer(markerObj.circle)
+      map.value.removeLayer(markerObj.marker, markerObj.circle)
 
       existingMarkers.value = existingMarkers.value?.filter((m) => m.data.id !== id)
       fetchedData.value = fetchedData.value?.filter((d) => d.id !== id) || null
     }
+  }
+
+  function createWaypoint(latitude: number, longitude: number) {
+    map.value.closePopup()
+    if (waypoint.value) {
+      console.log(waypoint.value)
+      waypoint.value.setWaypoints([
+        L.latLng(coords.value.latitude, coords.value.longitude),
+        L.latLng(latitude, longitude),
+      ])
+      return
+    }
+
+    waypoint.value = L.Routing.control({
+      plan: L.Routing.plan(
+        [L.latLng(coords.value.latitude, coords.value.longitude), L.latLng(latitude, longitude)],
+        {
+          createMarker: () => false,
+        },
+      ),
+      routeWhileDragging: true,
+    }).addTo(map.value)
+  }
+
+  function cancelNavigation() {
+    waypoint.value.spliceWaypoints(0, 1)
+    waypoint.value = ''
   }
 
   return {
@@ -142,5 +187,8 @@ export const useMapStore = defineStore('map', () => {
     setMarker,
     createExistingMarkers,
     deleteExistingMarker,
+    createWaypoint,
+    waypoint,
+    cancelNavigation,
   }
 })

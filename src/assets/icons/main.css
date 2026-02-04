@@ -6,3 +6,9 @@
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.422)) drop-shadow(0 0 2px rgba(0, 0, 0, 0.702))
     brightness(1.1) contrast(1.1);
 }
+
+.leaflet-routing-container {
+  background-color: beige;
+  padding: 1rem;
+  display: none;
+}

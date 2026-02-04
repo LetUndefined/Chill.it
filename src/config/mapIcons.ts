@@ -1,8 +1,5 @@
 import L from 'leaflet'
 import currentLocationIcon from '@/assets/icons/current_location.svg'
-import markerIcon from 'leaflet/dist/images/marker-icon.png'
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png'
-import markerShadow from 'leaflet/dist/images/marker-shadow.png'
 import addLocation from '@/assets/icons/add_location.svg'
 import activeLocation from '@/assets/icons/active_location.svg'
 
