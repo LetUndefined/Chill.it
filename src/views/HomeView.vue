@@ -6,10 +6,11 @@ import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
 import { useSupaStore } from '@/stores/supaBase'
 import InputForm from '@/components/InputForm.vue'
+import { modalTrigger } from '@/services/ModalTrigger'
 
 const mapStore = useMapStore()
-const { map, coords } = storeToRefs(mapStore)
-const { callMap, setMarker, createExistingMarkers, createWaypoint } = mapStore
+const { map, coords, waypoint } = storeToRefs(mapStore)
+const { callMap, setMarker, createExistingMarkers, cancelNavigation } = mapStore
 
 const supaStore = useSupaStore()
 const { fetchData } = supaStore
@@ -47,12 +48,15 @@ onMounted(async () => {
   <div class="home">
     <HeaderComponent />
     <main>
-      <div class="modal-container">
+      <div class="modal-container" v-if="modalTrigger">
         <InputForm />
       </div>
       <div id="map"></div>
       <div v-if="loading" class="loading-overlay">
         <div class="spinner"></div>
+      </div>
+      <div class="cancel-navigation-container" v-if="waypoint">
+        <button class="cancel" @click="cancelNavigation">Cancel Navigation</button>
       </div>
     </main>
     <FooterComponent />
@@ -113,6 +117,36 @@ main {
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+.cancel-navigation-container {
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  z-index: 1000;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  border-radius: 10px;
+  padding: 2px;
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.cancel {
+  background-color: rgb(225, 27, 27);
+  box-shadow: 0px 0px 10px -2px black;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  color: #ffffff;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(0);
   }
 }
 </style>

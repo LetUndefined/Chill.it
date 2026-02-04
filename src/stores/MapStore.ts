@@ -155,11 +155,11 @@ export const useMapStore = defineStore('map', () => {
   function createWaypoint(latitude: number, longitude: number) {
     map.value.closePopup()
     if (waypoint.value) {
+      console.log(waypoint.value)
       waypoint.value.setWaypoints([
         L.latLng(coords.value.latitude, coords.value.longitude),
         L.latLng(latitude, longitude),
       ])
-
       return
     }
 
@@ -174,6 +174,11 @@ export const useMapStore = defineStore('map', () => {
     }).addTo(map.value)
   }
 
+  function cancelNavigation() {
+    waypoint.value.spliceWaypoints(0, 1)
+    waypoint.value = ''
+  }
+
   return {
     map,
     marker,
@@ -183,5 +188,7 @@ export const useMapStore = defineStore('map', () => {
     createExistingMarkers,
     deleteExistingMarker,
     createWaypoint,
+    waypoint,
+    cancelNavigation,
   }
 })
