@@ -25,7 +25,7 @@ import { modalTrigger } from '@/services/ModalTrigger'
   width: 100%;
   height: 100%;
   z-index: 1001;
-  animation: slideIn 0.4s ease-in-out;
+  animation: slideInLeft 0.4s ease-in-out;
 }
 
 .modal {
@@ -62,7 +62,7 @@ import { modalTrigger } from '@/services/ModalTrigger'
   bottom: 10px;
   text-align: center;
   font-size: 24px;
-  color: rgba(0, 0, 0, 0.5);
+  color: var(--black);
   pointer-events: none;
   animation: bounce 2s infinite;
 }
@@ -74,16 +74,6 @@ import { modalTrigger } from '@/services/ModalTrigger'
   }
   50% {
     transform: translateY(-10px);
-  }
-}
-
-@keyframes slideIn {
-  0% {
-    transform: translateX(-100%);
-  }
-
-  100% {
-    transform: translateX(0);
   }
 }
 </style>

@@ -1,3 +1,16 @@
+:root {
+  --primary-color: #5585b5;
+  --secondary-color: #53a8b6;
+  --tertiary-color: #79c2d0;
+  --light-color: #bbe4e9;
+  --white: #ffffff;
+  --black: #000000;
+  --box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
 .current-position {
   filter: drop-shadow(2px 2px 4px rgb(0, 0, 0));
 }
@@ -8,7 +21,66 @@
 }
 
 .leaflet-routing-container {
-  background-color: beige;
   padding: 1rem;
-  display: none;
+  position: fixed;
+  bottom: 8%;
+  left: 10%;
+  right: 10%;
+  animation: slideInBottom 0.3s ease-in-out;
+}
+
+.leaflet-routing-container::before {
+  content: '';
+  position: absolute;
+  backdrop-filter: blur(15px);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  box-shadow: 0px 0px 10px -4px;
+  border-radius: 10px;
+}
+
+.leaflet-routing-alt {
+  display: flex;
+  flex-direction: column;
+}
+
+.leaflet-routing-alt h3 {
+  display: flex;
+}
+
+.leaflet-routing-alt table {
+  display: none !important;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInBottom {
+  0% {
+    transform: translateY(200%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }

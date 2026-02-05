@@ -170,12 +170,12 @@ export const useMapStore = defineStore('map', () => {
           createMarker: () => false,
         },
       ),
-      routeWhileDragging: true,
+      summaryTemplate: `<h2>{name}</h2><h3>{distance}<h3><h3>{time}</h3>`,
     }).addTo(map.value)
   }
 
   function cancelNavigation() {
-    waypoint.value.spliceWaypoints(0, 1)
+    waypoint.value.remove()
     waypoint.value = ''
   }
 
