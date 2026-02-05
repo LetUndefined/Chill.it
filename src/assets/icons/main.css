@@ -84,3 +84,20 @@
     transform: translateY(0);
   }
 }
+.form-container button::before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  background: linear-gradient(to bottom right, var(--primary-color), var(--black));
+  border-radius: 10px;
+  width: 0%;
+  height: 100%;
+  z-index: -1;
+  transition: 0.2s ease-in-out;
+}
+
+.form-container button:hover::before {
+  width: 100%;
+}
+

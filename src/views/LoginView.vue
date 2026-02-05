@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import SignInForm from '@/components/LoginForm.vue'
 import { CircleUserRound, KeyRound } from 'lucide-vue-next'
+import router from '@/router'
 </script>
 
 <template>
-  <form class="form-container">
-    <div class="form-content">
-      <h2>Log in</h2>
+  <div class="form-container">
+    <SignInForm title="Log in">
       <div class="form-group">
         <label for="email">Email</label>
         <div class="input-wrapper">
@@ -26,36 +27,20 @@ import { CircleUserRound, KeyRound } from 'lucide-vue-next'
         <button type="button" class="submit">Submit</button>
       </div>
 
-      <div class="signup">
-        <p>Don't have an account? <span>Register</span></p>
+      <div class="login">
+        <p>Don't have an account? <span @click="router.push('signup')">Register</span></p>
       </div>
-    </div>
-  </form>
+    </SignInForm>
+  </div>
 </template>
 
 <style scoped>
 .form-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.form-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 320px;
-  min-height: 22rem;
-  padding: 1rem;
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  gap: 2rem;
-}
-
-.form-content h2 {
-  font-weight: 900;
-  color: var(--white);
+  height: 100vh;
+  background: url('src/assets/images/nature-background.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .form-group {
@@ -72,12 +57,13 @@ import { CircleUserRound, KeyRound } from 'lucide-vue-next'
   display: flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid var(--white);
+  box-shadow: 0px 2px 2px var(--white);
   padding: 5px 10px;
   border-radius: 20px;
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.input-wrapper input::placeholder {
   outline: none;
   color: var(--white);
 }
@@ -88,8 +74,20 @@ import { CircleUserRound, KeyRound } from 'lucide-vue-next'
   border-radius: 10px;
   color: var(--background-color);
   color: var(--white);
+  position: relative;
 }
 .icon {
   opacity: 0.8;
+}
+
+.login span {
+  color: var(--white);
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.input-wrapper:focus-within {
+  box-shadow: 0px 2px 2px var(--primary-color);
 }
 </style>
