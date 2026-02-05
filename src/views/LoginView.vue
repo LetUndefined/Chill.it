@@ -37,7 +37,7 @@ import router from '@/router'
 <style scoped>
 .form-container {
   height: 100vh;
-  background: url('src/assets/images/nature-background.jpg');
+  background: url('@/assets/images/nature-background.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
