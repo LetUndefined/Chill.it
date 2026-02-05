@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import HeaderComponent from '@/components/HeaderComponent.vue'
-import FooterComponent from '@/components/FooterComponent.vue'
 import { onMounted, ref } from 'vue'
 import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
@@ -46,7 +44,6 @@ onMounted(async () => {
 
 <template>
   <div class="home">
-    <HeaderComponent />
     <main>
       <div class="modal-container" v-if="modalTrigger">
         <InputForm />
@@ -59,7 +56,6 @@ onMounted(async () => {
         <button class="cancel" @click="cancelNavigation">Cancel Navigation</button>
       </div>
     </main>
-    <FooterComponent />
   </div>
 </template>
 
@@ -139,6 +135,4 @@ main {
   border-radius: 10px;
   color: #ffffff;
 }
-
-
 </style>

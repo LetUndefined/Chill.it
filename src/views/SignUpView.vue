@@ -2,6 +2,17 @@
 import SignInForm from '@/components/LoginForm.vue'
 import { CircleUserRound, KeyRound, ArrowBigLeftDash } from 'lucide-vue-next'
 import router from '@/router'
+import { useAuthStore } from '@/stores/Auth'
+import { storeToRefs } from 'pinia'
+
+const authStore = useAuthStore()
+const { signUp } = authStore
+const { email, password, confirmedPassword } = storeToRefs(authStore)
+
+const handleSignUp = async () => {
+  const success = await signUp()
+  if (success) router.push('/login')
+}
 </script>
 
 <template>
@@ -11,7 +22,7 @@ import router from '@/router'
         <label for="email">Email</label>
         <div class="input-wrapper">
           <CircleUserRound color="var(--white)" class="icon" />
-          <input type="email" placeholder="Email" id="email" />
+          <input type="email" placeholder="Email" id="email" v-model="email" autocomplete="email" />
         </div>
       </div>
 
@@ -19,7 +30,13 @@ import router from '@/router'
         <label for="password">Password</label>
         <div class="input-wrapper">
           <KeyRound color="var(--white)" class="icon" />
-          <input type="password" placeholder="Password" id="password" />
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            v-model="password"
+            autocomplete="new-password"
+          />
         </div>
       </div>
 
@@ -27,7 +44,13 @@ import router from '@/router'
         <label for="password">Confirm Password</label>
         <div class="input-wrapper">
           <KeyRound color="var(--white)" class="icon" />
-          <input type="password" placeholder="Confirm Password" id="password" />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            id="password"
+            v-model="confirmedPassword"
+            autocomplete="new-password"
+          />
         </div>
       </div>
 
@@ -36,7 +59,7 @@ import router from '@/router'
           <ArrowBigLeftDash color="var(--white)" class="arrow" />
           <span>Back</span>
         </div>
-        <button type="button" class="submit">Submit</button>
+        <button type="button" @click="handleSignUp" class="submit">Submit</button>
       </div>
     </SignInForm>
   </div>
