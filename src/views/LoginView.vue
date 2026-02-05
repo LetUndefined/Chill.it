@@ -10,8 +10,8 @@ const { email, password } = storeToRefs(authStore)
 const { signIn } = authStore
 
 const handleSignIn = async () => {
-  const succes = await signIn()
-  if (succes) router.push('/')
+  const success = await signIn()
+  if (success) router.push('/')
 }
 </script>
 

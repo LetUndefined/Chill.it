@@ -41,13 +41,13 @@ const handleSignUp = async () => {
       </div>
 
       <div class="form-group">
-        <label for="password">Confirm Password</label>
+        <label for="confirm-password">Confirm Password</label>
         <div class="input-wrapper">
           <KeyRound color="var(--white)" class="icon" />
           <input
             type="password"
             placeholder="Confirm Password"
-            id="password"
+            id="confirm-password"
             v-model="confirmedPassword"
             autocomplete="new-password"
           />

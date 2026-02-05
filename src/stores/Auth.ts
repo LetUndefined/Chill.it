@@ -14,7 +14,6 @@ export const useAuthStore = defineStore('auth', () => {
       email: email.value,
       password: password.value,
     })
-    console.log(data)
     if (error) {
       console.error(`Failed signing up: ${error}`)
       alert(`Error: ${error}`)

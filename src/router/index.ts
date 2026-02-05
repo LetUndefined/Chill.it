@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import MainLayout from '@/layout/MainLayout.vue'
+import { supabase } from '@/stores/supaBase'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,16 @@ router.isReady().then(() => {
   if (redirect) {
     sessionStorage.removeItem('redirect')
     router.replace(redirect)
+  }
+})
+
+router.beforeEach(async (to) => {
+  const { data, error } = await supabase.auth.getUser()
+  if ((error || !data.user) && to.name !== 'login' && to.name !== 'signup') {
+    return { name: 'login' }
+  }
+  if (data.user && !error && (to.name === 'login' || to.name === 'signup')) {
+    return { name: 'home' }
   }
 })
 
