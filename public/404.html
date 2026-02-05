@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Chill.it</title>
+    <script>
+      // Store the current path (removing the base path)
+      var path = location.pathname.replace('/Chill.it', '');
+      sessionStorage.setItem('redirect', path + location.search + location.hash);
+      // Redirect to index.html
+      location.replace('/Chill.it/');
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

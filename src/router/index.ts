@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
@@ -20,6 +20,15 @@ const router = createRouter({
       component: () => import('@/views/SignUpView.vue'),
     },
   ],
+})
+
+// Handle 404 redirect from GitHub Pages
+router.isReady().then(() => {
+  const redirect = sessionStorage.getItem('redirect')
+  if (redirect) {
+    sessionStorage.removeItem('redirect')
+    router.replace(redirect)
+  }
 })
 
 export default router
