@@ -19,17 +19,24 @@ onMounted(async () => {
       <h1>Locations near you</h1>
     </div>
     <div class="card-container">
-      <LocationCard
-        v-for="(location, index) in fetchedData"
-        :key="index"
-        :title="location.title"
-        :chill_level="location.chill_level"
-        :image-url="location.image_url"
-        :vibe="location.vibe"
-        :visiting="location.visiting"
-        :description="location.description"
-        :accessibility="location.accessibility"
-      />
+      <v-carousel
+        v-if="fetchedData && fetchedData.length > 0"
+        hide-delimiters
+        show-arrows
+        height="700"
+      >
+        <v-carousel-item v-for="location in fetchedData" :key="location.id">
+          <LocationCard
+            :title="location.title"
+            :chill_level="location.chill_level"
+            :image-url="location.image_url"
+            :vibe="location.vibe"
+            :visiting="location.visiting"
+            :description="location.description"
+            :accessibility="location.accessibility"
+          />
+        </v-carousel-item>
+      </v-carousel>
     </div>
   </div>
 </template>
@@ -47,5 +54,9 @@ onMounted(async () => {
   flex: 1;
   justify-content: center;
   align-items: center;
+}
+
+:deep(.v-btn--icon) {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>
