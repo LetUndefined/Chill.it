@@ -28,8 +28,8 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #2c3e50;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white);
   display: flex;
   align-items: center;
   padding: 0 20px;

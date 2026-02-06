@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { useMapStore } from '@/stores/MapStore'
 import { storeToRefs } from 'pinia'
 import { useSupaStore } from '@/stores/supaBase'
@@ -39,6 +39,13 @@ onMounted(async () => {
       loading.value = false
     },
   )
+})
+
+onUnmounted(() => {
+  if (map.value) {
+    map.value.remove()
+    map.value = null
+  }
 })
 </script>
 

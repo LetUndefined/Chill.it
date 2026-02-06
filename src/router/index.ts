@@ -16,6 +16,11 @@ const router = createRouter({
           name: 'home',
           component: HomeView,
         },
+        {
+          path: '/listview',
+          name: 'listview',
+          component: () => import('@/views/ListView.vue'),
+        },
       ],
     },
     {

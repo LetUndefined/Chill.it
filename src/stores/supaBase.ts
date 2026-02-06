@@ -90,7 +90,6 @@ export const useSupaStore = defineStore('supaStore', () => {
           latitude: e.latitude,
           longitude: e.longitude,
         }
-
         return setMarker
       })
     }
