@@ -28,7 +28,7 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: var(--primary-color);
+  background-color: var(--brown);
   color: var(--white);
   display: flex;
   align-items: center;

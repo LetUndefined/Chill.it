@@ -21,7 +21,7 @@ footer {
   left: 0;
   right: 0;
   height: 50px;
-  background-color: var(--primary-color);
+  background-color: var(--brown);
   color: white;
   display: flex;
   align-items: center;

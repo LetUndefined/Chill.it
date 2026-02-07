@@ -16,16 +16,15 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 <style scoped>
 .modal-container {
-  background-color: transparent;
-  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   position: fixed;
   top: 0;
-  left: -100%;
+  left: 0;
   width: 100%;
   height: 100%;
   z-index: 1001;
-  animation: slideInLeft 0.4s ease-in-out;
 }
 
 .modal {
@@ -40,8 +39,8 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 .close {
   position: absolute;
-  top: 30px;
-  right: 35px;
+  top: 10px;
+  right: 20px;
   font-size: 20px;
   padding: 0.25rem 0.75rem;
   border-radius: 10px;
