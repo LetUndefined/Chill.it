@@ -9,22 +9,17 @@ const { fetchData } = supaStore
 
 onMounted(async () => {
   if (!fetchedData.value) await fetchData()
-  console.log(fetchedData.value)
 })
 </script>
 
 <template>
   <div class="container">
     <div class="title">
-      <h1>Locations near you</h1>
+      <h1>Locations Near <span>You</span></h1>
+      <p>Find beautiful locations near you, swipe through the options below!</p>
     </div>
     <div class="card-container">
-      <v-carousel
-        v-if="fetchedData && fetchedData.length > 0"
-        hide-delimiters
-        show-arrows
-        height="700"
-      >
+      <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="600">
         <v-carousel-item v-for="location in fetchedData" :key="location.id">
           <LocationCard
             :title="location.title"
@@ -45,8 +40,40 @@ onMounted(async () => {
 .container {
   display: flex;
   flex-direction: column;
-  margin-top: 60px;
-  height: 100vh;
+  min-height: 100vh;
+  background: var(--gradient-bg);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  margin: 6rem 0 0 0;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin: 0;
+  color: var(--primary-color);
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.title span {
+  border-bottom: 1px solid;
+}
+
+.title p {
+  font-size: 1rem;
+  font-weight: 400;
+  color: rgba(96, 92, 92, 0.795);
+  margin: 0.5rem 0 0 0;
+  letter-spacing: 0.02em;
+  text-align: center;
+  max-width: 350px;
 }
 
 .card-container {
@@ -54,9 +81,23 @@ onMounted(async () => {
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 0rem 0 2rem 0;
 }
 
 :deep(.v-btn--icon) {
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(85, 133, 181, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+:deep(.v-carousel) {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+:deep(.v-responsive__content) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

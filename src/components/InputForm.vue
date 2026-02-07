@@ -50,8 +50,8 @@ const handleSubmit = () => {
         </div>
 
         <div class="form-group">
-          <label for="email">Chill level</label>
-          <input id="email" type="text" v-model="formData.chill_level" />
+          <label for="chill">Chill level</label>
+          <input id="chill" type="number" max="5" v-model="formData.chill_level" />
         </div>
 
         <div class="form-group">

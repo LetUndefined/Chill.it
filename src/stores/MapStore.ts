@@ -145,7 +145,9 @@ export const useMapStore = defineStore('map', () => {
     const markerObj = existingMarkers.value?.find((m) => m.data.id === id)
 
     if (markerObj) {
-      map.value.removeLayer(markerObj.marker, markerObj.circle)
+      map.value.removeLayer(markerObj.marker)
+      map.value.removeLayer(markerObj.circle)
+      map.value.closePopup()
 
       existingMarkers.value = existingMarkers.value?.filter((m) => m.data.id !== id)
       fetchedData.value = fetchedData.value?.filter((d) => d.id !== id) || null

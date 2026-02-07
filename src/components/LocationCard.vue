@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Clock, Sparkle, PersonStanding, Star } from 'lucide-vue-next'
+import { Clock, Sparkle, PersonStanding, Circle } from 'lucide-vue-next'
 
 const props = defineProps<{
   title: string
@@ -21,10 +21,10 @@ const props = defineProps<{
         <div class="chip">
           <div class="chip-content">
             <h4>Chill</h4>
-            <Star
+            <Circle
               v-for="n in 5"
               :key="n"
-              :fill="n <= props.chill_level ? 'var(--secondary-color)' : 'none'"
+              :fill="n <= props.chill_level ? 'var(--purple)' : 'none'"
               :size="12"
             />
           </div>
@@ -56,7 +56,7 @@ const props = defineProps<{
           <div class="information-content">
             <PersonStanding color="var(--green)" />
             <div class="text">
-              <h4>accessibility</h4>
+              <h4>Accessibility</h4>
               <p>{{ props.accessibility }}</p>
             </div>
           </div>
@@ -71,6 +71,7 @@ const props = defineProps<{
   width: 400px;
   position: relative;
   border-radius: 20px;
+  box-shadow: var(--box-shadow-xl);
 }
 
 .v-card-title,
@@ -80,12 +81,13 @@ const props = defineProps<{
 }
 
 .card-content {
-  padding: 1rem;
+  padding: 1.5rem 2rem;
 }
 
 .information {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
 .information-content {
@@ -102,9 +104,15 @@ const props = defineProps<{
   padding: 0.25rem 0.5rem;
   top: 10px;
   right: 10px;
+  gap: 0.1rem;
 }
 
 .chip-content h4 {
   margin-right: 0.25rem;
+  font-weight: 300;
+}
+
+.text p {
+  font-size: 14px;
 }
 </style>
