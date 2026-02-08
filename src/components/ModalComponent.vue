@@ -25,6 +25,7 @@ import { modalTrigger } from '@/services/ModalTrigger'
   width: 100%;
   height: 100%;
   z-index: 1001;
+  animation: slideInRight 0.3s ease-in-out;
 }
 
 .modal {
@@ -39,14 +40,16 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 .close {
   position: absolute;
-  top: 10px;
-  right: 20px;
-  font-size: 20px;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
   padding: 0.25rem 0.75rem;
   border-radius: 10px;
-  background-color: rgb(252, 57, 35);
   color: white;
+  border: 1px solid var(--primary-color);
   box-shadow: 0px 2px 8px -2px black;
+  z-index: 100;
+  animation: slideOut 0.3s ease-in-out;
 }
 
 .modal-content {
@@ -64,15 +67,5 @@ import { modalTrigger } from '@/services/ModalTrigger'
   color: var(--black);
   pointer-events: none;
   animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
 }
 </style>

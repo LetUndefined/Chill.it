@@ -8,7 +8,7 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 const mapStore = useMapStore()
 const { map, coords, waypoint } = storeToRefs(mapStore)
-const { callMap, setMarker, createExistingMarkers, cancelNavigation } = mapStore
+const { callMap, setMarker, createExistingMarkers, cancelNavigation, markersInRange } = mapStore
 
 const supaStore = useSupaStore()
 const { fetchData } = supaStore
@@ -33,6 +33,7 @@ onMounted(async () => {
       await fetchData()
       createExistingMarkers()
       loading.value = false
+      markersInRange()
     },
     (error) => {
       alert(`Geolocation error: ${error.message}, Turn on Location in your settings`)

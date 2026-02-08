@@ -127,7 +127,11 @@ export const useMapStore = defineStore('map', () => {
         })
 
         app.mount(container)
-        circle.bindPopup(container)
+        circle.bindPopup(container, {
+          minWidth: 250,
+          maxWidth: 300,
+          maxHeight: 600,
+        })
 
         setTimeout(() => {
           circle.setStyle({
@@ -181,6 +185,16 @@ export const useMapStore = defineStore('map', () => {
     waypoint.value = ''
   }
 
+  function markersInRange() {
+    existingMarkers.value?.forEach((e) => {
+      const markerLatLng = L.latLng(e.data.latitude, e.data.longitude)
+      const distance = currentLocationMarker.value.getLatLng().distanceTo(markerLatLng)
+
+      if (distance < 10000) {
+        console.log()
+      }
+    })
+  }
   return {
     map,
     marker,
@@ -192,5 +206,6 @@ export const useMapStore = defineStore('map', () => {
     createWaypoint,
     waypoint,
     cancelNavigation,
+    markersInRange,
   }
 })

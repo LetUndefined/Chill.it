@@ -13,6 +13,8 @@
   --purple: #894edc;
   --green: #48d46d;
   --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e8f0f8 100%);
+  --gradient-blue: linear-gradient(to bottom left, #3c85f3 0%, #7faede 50%, #195590 100%);
+  --destructive: rgb(249, 61, 61);
 }
 
 * {
@@ -69,7 +71,7 @@ body {
 
 @keyframes slideInLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateX(-200%);
   }
 
   100% {
@@ -96,6 +98,17 @@ body {
     transform: translateY(0);
   }
 }
+
+@keyframes slideOut {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(200%);
+  }
+}
+
 .form-container button::before {
   position: absolute;
   content: '';

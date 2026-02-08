@@ -15,7 +15,7 @@ const handleLogOut = async () => {
 <template>
   <header>
     <div class="header-container">
-      <h1>Chill.it</h1>
+      <h1>Chill it</h1>
       <LogOut @click="handleLogOut" />
     </div>
   </header>
@@ -28,7 +28,7 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: var(--brown);
+  background: var(--gradient-blue);
   color: var(--white);
   display: flex;
   align-items: center;
@@ -47,5 +47,9 @@ header {
 h1 {
   margin: 0;
   font-size: 24px;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--white);
+  border-radius: 20px;
 }
 </style>

@@ -56,7 +56,8 @@ const handleSubmit = () => {
             :length="5"
             :size="27"
             v-model="formData.chill_level"
-            active-color="primary"
+            active-color="secondary"
+            color="white"
           />
         </div>
 
@@ -89,7 +90,7 @@ const handleSubmit = () => {
           <v-select
             label="Select"
             :items="['Quiet', 'Social', 'Romantic', 'Adventurous', 'Chill']"
-            variant="solo-filled"
+            variant="solo"
             v-model="formData.vibe"
             density="compact"
           ></v-select>
@@ -100,7 +101,7 @@ const handleSubmit = () => {
           <v-select
             label="Select"
             :items="['Easy walk', 'Moderate walk', 'Hard to reach', 'Wheelchair accessible']"
-            variant="solo-filled"
+            variant="solo"
             v-model="formData.accessibility"
             density="compact"
           ></v-select>
@@ -109,7 +110,13 @@ const handleSubmit = () => {
         <button class="submit-btn" @click="handleSubmit">Submit</button>
       </form>
       <div>
-        <input type="file" accept="image/*" capture="environment" @change="handlePhotoCapture" />
+        <input
+          type="file"
+          id="file-upload-button"
+          accept="image/*"
+          capture="environment"
+          @change="handlePhotoCapture"
+        />
       </div>
     </div>
   </modal-component>
@@ -124,10 +131,6 @@ const handleSubmit = () => {
   max-width: 600px;
   max-height: 100vh;
   overflow-y: auto;
-  background: url('@/assets/images/landscape-form.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -208,6 +211,12 @@ textarea {
   padding: 0.5rem;
 }
 
+:deep(.v-field) {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+}
+
 form {
   display: flex;
   flex-direction: column;
@@ -216,26 +225,17 @@ form {
 input[type='file'] {
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
   border: 2px dashed rgba(255, 255, 255, 0.3);
   border-radius: 12px;
-  color: var(--white);
-  cursor: pointer;
-  transition: all 0.3s ease;
   font-size: 0.85rem;
-}
-
-input[type='file']:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.5);
+  color: rgb(102, 102, 102);
 }
 
 .submit-btn {
   width: 100%;
   padding: 0.75rem;
   margin-top: 1rem;
-  background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
-  color: white;
+  color: var(--white);
   border: none;
   border-radius: 12px;
   font-size: 0.95rem;
@@ -243,17 +243,8 @@ input[type='file']:hover {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+  border: 1px solid var(--white);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-.submit-btn:hover {
-  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
-}
-
-.submit-btn:active {
-  transform: translateY(0);
 }
 </style>
