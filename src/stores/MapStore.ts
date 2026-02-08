@@ -24,6 +24,12 @@ export const useMapStore = defineStore('map', () => {
   const waypoint = ref()
   const currentLocationMarker = ref()
 
+  // Shared Vuetify instance for all popups
+  const sharedVuetify = createVuetify({
+    components,
+    directives,
+  })
+
   const coords: Ref<GeolocationCoordinates> = ref({
     latitude: 0,
     longitude: 0,
@@ -86,11 +92,7 @@ export const useMapStore = defineStore('map', () => {
       lat: e.lat,
       lng: e.lng,
     }
-    const vuetify = createVuetify({
-      components,
-      directives,
-    })
-    app.use(vuetify)
+    app.use(sharedVuetify)
     app.mount(container)
 
     marker.value = L.marker(e, { icon: addPosition }).setLatLng(e).addTo(map.value)
@@ -134,11 +136,7 @@ export const useMapStore = defineStore('map', () => {
           longitude: Number(e.longitude),
         })
 
-        const vuetify = createVuetify({
-          components,
-          directives,
-        })
-        app.use(vuetify)
+        app.use(sharedVuetify)
         app.mount(container)
         circle.bindPopup(container, {
           minWidth: 250,

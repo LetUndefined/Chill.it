@@ -13,7 +13,7 @@
   --purple: #894edc;
   --green: #48d46d;
   --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e8f0f8 100%);
-  --gradient-blue: linear-gradient(to bottom left, #3c85f3 0%, #7faede 50%, #195590 100%);
+  --gradient-blue: linear-gradient(to left, #000000 0%, #552121 50%, #000000 100%);
   --destructive: rgb(249, 61, 61);
 }
 
