@@ -47,6 +47,7 @@ onUnmounted(() => {
     map.value.remove()
     map.value = null
   }
+  if (waypoint.value) cancelNavigation()
 })
 </script>
 

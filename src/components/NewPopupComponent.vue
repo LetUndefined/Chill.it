@@ -1,15 +1,10 @@
 <script setup lang="ts">
 import { modalTrigger } from '@/services/ModalTrigger'
-
-const props = defineProps<{
-  lat: number
-  lng: number
-}>()
 </script>
 
 <template>
   <div>
-    <p>Coordinaten: latitude {{ props.lat }}, longitude {{ props.lng }}</p>
+    <p>Add Location</p>
     <button id="popup-button" @click="modalTrigger = true">Add location</button>
   </div>
 </template>

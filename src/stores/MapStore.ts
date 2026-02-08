@@ -4,6 +4,9 @@ import L from 'leaflet'
 import type { Latlng, GeolocationCoordinates, ExistingMarker } from '@/models/interface'
 import { createApp } from 'vue'
 import 'leaflet-routing-machine'
+import { createVuetify } from 'vuetify'
+import * as components from 'vuetify/components'
+import * as directives from 'vuetify/directives'
 
 import { useSupaStore } from './supaBase'
 import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
@@ -83,6 +86,11 @@ export const useMapStore = defineStore('map', () => {
       lat: e.lat,
       lng: e.lng,
     }
+    const vuetify = createVuetify({
+      components,
+      directives,
+    })
+    app.use(vuetify)
     app.mount(container)
 
     marker.value = L.marker(e, { icon: addPosition }).setLatLng(e).addTo(map.value)
@@ -126,6 +134,11 @@ export const useMapStore = defineStore('map', () => {
           longitude: Number(e.longitude),
         })
 
+        const vuetify = createVuetify({
+          components,
+          directives,
+        })
+        app.use(vuetify)
         app.mount(container)
         circle.bindPopup(container, {
           minWidth: 250,

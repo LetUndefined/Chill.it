@@ -1,5 +1,12 @@
 <script setup lang="ts">
+import { useMapStore } from '@/stores/MapStore'
 import { Clock, Sparkle, PersonStanding, Circle } from 'lucide-vue-next'
+import router from '@/router'
+import { storeToRefs } from 'pinia'
+
+const mapStore = useMapStore()
+const { createWaypoint } = mapStore
+const { map } = storeToRefs(mapStore)
 
 const props = defineProps<{
   title: string
@@ -9,7 +16,30 @@ const props = defineProps<{
   vibe: string
   accessibility: string
   imageUrl: string
+  latitude: number
+  longitude: number
 }>()
+
+const createRoute = async () => {
+  await router.push('/')
+
+  let attempts = 0
+  const maxAttempts = 10
+
+  const checkMap = () => {
+    if (map.value) {
+      createWaypoint(props.latitude, props.longitude)
+    } else if (attempts < maxAttempts) {
+      attempts++
+      setTimeout(checkMap, 100)
+      console.log(attempts)
+    } else {
+      console.error('Map failed to initialize')
+    }
+  }
+
+  checkMap()
+}
 </script>
 
 <template>
@@ -62,6 +92,9 @@ const props = defineProps<{
           </div>
         </div>
       </div>
+      <div class="buttons">
+        <button class="navigate" @click="createRoute">Navigate</button>
+      </div>
     </v-card>
   </div>
 </template>
@@ -81,7 +114,7 @@ const props = defineProps<{
 }
 
 .card-content {
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 1.75rem 0 1.25rem;
 }
 
 .information {
@@ -114,5 +147,22 @@ const props = defineProps<{
 
 .text p {
   font-size: 14px;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.buttons > * {
+  padding: 0.5rem 0.5rem;
+  margin: 1rem;
+  border-radius: 20px;
+  background-color: var(--primary-color);
+  text-transform: uppercase;
+  color: var(--white);
+  box-shadow: 0px 2px 5px black;
+  font-weight: 600;
 }
 </style>

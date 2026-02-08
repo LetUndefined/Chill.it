@@ -33,62 +33,58 @@ const createRoute = () => {
 </script>
 
 <template>
-  <div class="card">
-    <v-card class="mx-auto">
-      <img height="200px" width="250px" :src="props.imageUrl" />
+  <div class="custom-card">
+    <img height="200px" width="250px" :src="props.imageUrl" />
 
-      <div class="card-content">
-        <div class="chip">
-          <div class="chip-content">
-            <h4>Chill</h4>
-            <Circle
-              v-for="n in 5"
-              :key="n"
-              :fill="n <= props.chill_level ? 'var(--purple)' : 'none'"
-              :size="12"
-            />
-          </div>
-        </div>
-        <div class="text">
-          <div class="title">
-            <v-card-title> {{ props.title }} </v-card-title>
-          </div>
-
-          <div class="description">
-            <v-card-text>
-              {{ props.description }}
-            </v-card-text>
-          </div>
-        </div>
-        <div class="information">
-          <div class="information-content">
-            <Clock color="var(--secondary-color)" />
-            <div class="text">
-              <h4>Visiting time</h4>
-              <p>{{ props.visiting }}</p>
-            </div>
-          </div>
-          <div class="information-content">
-            <Sparkle color="var(--purple)" />
-            <div class="text">
-              <h4>Vibe</h4>
-              <p>{{ props.vibe }}</p>
-            </div>
-          </div>
-          <div class="information-content">
-            <PersonStanding color="var(--green)" />
-            <div class="text">
-              <h4>Accessibility</h4>
-              <p>{{ props.accessibility }}</p>
-            </div>
-          </div>
-        </div>
-        <div class="buttons">
-          <button class="delete" @click="removeMarker">Delete</button>
-          <button class="navigate" @click="createRoute">Navigate</button>
+    <div class="card-content">
+      <div class="chip">
+        <div class="chip-content">
+          <h4>Chill</h4>
+          <Circle
+            v-for="n in 5"
+            :key="n"
+            :fill="n <= props.chill_level ? 'var(--purple)' : 'none'"
+            :size="12"
+          />
         </div>
       </div>
-    </v-card>
+      <div class="text">
+        <div class="title">
+          <h3>{{ props.title }}</h3>
+        </div>
+
+        <div class="description">
+          <p>{{ props.description }}</p>
+        </div>
+      </div>
+      <div class="information">
+        <div class="information-content">
+          <Clock color="var(--secondary-color)" />
+          <div class="text">
+            <h4>Visiting time</h4>
+            <p>{{ props.visiting }}</p>
+          </div>
+        </div>
+        <div class="information-content">
+          <Sparkle color="var(--purple)" />
+          <div class="text">
+            <h4>Vibe</h4>
+            <p>{{ props.vibe }}</p>
+          </div>
+        </div>
+        <div class="information-content">
+          <PersonStanding color="var(--green)" />
+          <div class="text">
+            <h4>Accessibility</h4>
+            <p>{{ props.accessibility }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="delete" @click="removeMarker">Delete</button>
+        <button class="navigate" @click="createRoute">Navigate</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -109,10 +105,9 @@ const createRoute = () => {
 </style>
 
 <style scoped>
-.v-card {
+.custom-card {
   position: relative;
   border-radius: 20px;
-  box-shadow: var(--box-shadow-xl);
 }
 
 .text .title,

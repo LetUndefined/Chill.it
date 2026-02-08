@@ -9,6 +9,7 @@ const { fetchData } = supaStore
 
 onMounted(async () => {
   if (!fetchedData.value) await fetchData()
+
 })
 </script>
 
@@ -29,6 +30,8 @@ onMounted(async () => {
             :visiting="location.visiting"
             :description="location.description"
             :accessibility="location.accessibility"
+            :longitude="location.longitude"
+            :latitude="location.latitude"
           />
         </v-carousel-item>
       </v-carousel>
