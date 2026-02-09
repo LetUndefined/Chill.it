@@ -29,6 +29,7 @@ export interface SupabaseTable {
   image_url: string
   latitude: number
   longitude: number
+  user_id?: string
 }
 
 export interface ExistingMarker {

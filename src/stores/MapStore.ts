@@ -135,6 +135,7 @@ export const useMapStore = defineStore('map', () => {
           imageUrl: e.image_url,
           latitude: Number(e.latitude),
           longitude: Number(e.longitude),
+          userId: e.user_id,
         })
 
         app.use(sharedVuetify)

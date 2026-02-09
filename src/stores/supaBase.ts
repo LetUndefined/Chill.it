@@ -60,6 +60,7 @@ export const useSupaStore = defineStore('supaStore', () => {
       image_url: imageUrl,
       latitude: latLng.value.lat,
       longitude: latLng.value.lng,
+      user_id: (await supabase.auth.getUser()).data.user?.id,
     })
 
     console.log('Marker added')
@@ -89,6 +90,7 @@ export const useSupaStore = defineStore('supaStore', () => {
           image_url: imageData.publicUrl,
           latitude: e.latitude,
           longitude: e.longitude,
+          user_id: e.user_id,
         }
         return setMarker
       })
