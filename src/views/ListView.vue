@@ -1,15 +1,33 @@
 <script setup lang="ts">
 import LocationCard from '@/components/LocationCard.vue'
+import { useMapStore } from '@/stores/MapStore'
 import { useSupaStore } from '@/stores/supaBase'
 import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
+import { getCurrentPosition } from '@/services/geolocation'
 const supaStore = useSupaStore()
 const { fetchedData } = storeToRefs(supaStore)
 const { fetchData } = supaStore
 
-onMounted(async () => {
-  if (!fetchedData.value) await fetchData()
+const mapStore = useMapStore()
+const { markersInRange } = mapStore
+const { coords } = storeToRefs(mapStore)
 
+onMounted(async () => {
+  try {
+    if (!coords.value.latitude || !coords.value.longitude) {
+      coords.value = await getCurrentPosition()
+    }
+    if (!fetchedData.value) {
+      await fetchData()
+    }
+  } catch (error) {
+    console.error(`Geolocation error: ${error}`)
+  }
+})
+
+const markers = computed(() => {
+  return markersInRange()
 })
 </script>
 
@@ -21,7 +39,7 @@ onMounted(async () => {
     </div>
     <div class="card-container">
       <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="600">
-        <v-carousel-item v-for="location in fetchedData" :key="location.id">
+        <v-carousel-item v-for="location in markers" :key="location.id">
           <LocationCard
             :title="location.title"
             :chill_level="location.chill_level"
@@ -32,6 +50,7 @@ onMounted(async () => {
             :accessibility="location.accessibility"
             :longitude="location.longitude"
             :latitude="location.latitude"
+            :distance="location.distance"
           />
         </v-carousel-item>
       </v-carousel>

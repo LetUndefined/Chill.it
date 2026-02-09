@@ -3,6 +3,7 @@ import { useMapStore } from '@/stores/MapStore'
 import { Clock, Sparkle, PersonStanding, Circle } from 'lucide-vue-next'
 import router from '@/router'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
 const mapStore = useMapStore()
 const { createWaypoint } = mapStore
@@ -18,6 +19,7 @@ const props = defineProps<{
   imageUrl: string
   latitude: number
   longitude: number
+  distance: number
 }>()
 
 const createRoute = async () => {
@@ -40,6 +42,10 @@ const createRoute = async () => {
 
   checkMap()
 }
+
+const conversion = computed(() => {
+  return Number(props.distance) / 100
+})
 </script>
 
 <template>
@@ -93,7 +99,9 @@ const createRoute = async () => {
         </div>
       </div>
       <div class="buttons">
-        <button class="navigate" @click="createRoute">Navigate</button>
+        <button class="navigate" @click="createRoute">
+          Navigate {{ conversion.toFixed(2) }} km
+        </button>
       </div>
     </v-card>
   </div>

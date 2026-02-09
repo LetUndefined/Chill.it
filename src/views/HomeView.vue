@@ -5,6 +5,7 @@ import { storeToRefs } from 'pinia'
 import { useSupaStore } from '@/stores/supaBase'
 import InputForm from '@/components/InputForm.vue'
 import { modalTrigger } from '@/services/ModalTrigger'
+import { getCurrentPosition } from '@/services/geolocation'
 
 const mapStore = useMapStore()
 const { map, coords, waypoint } = storeToRefs(mapStore)
@@ -16,30 +17,18 @@ const { fetchData } = supaStore
 const loading = ref(true)
 
 onMounted(async () => {
-  navigator.geolocation.getCurrentPosition(
-    async (pos: GeolocationPosition) => {
-      coords.value = {
-        latitude: pos.coords.latitude,
-        longitude: pos.coords.longitude,
-        accuracy: pos.coords.accuracy,
-        altitude: pos.coords.altitude,
-        altitudeAccuracy: pos.coords.altitudeAccuracy,
-        heading: pos.coords.heading,
-        speed: pos.coords.speed,
-      }
-
-      callMap()
-      map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
-      await fetchData()
-      createExistingMarkers()
-      loading.value = false
-      markersInRange()
-    },
-    (error) => {
-      alert(`Geolocation error: ${error.message}, Turn on Location in your settings`)
-      loading.value = false
-    },
-  )
+  try {
+    coords.value = await getCurrentPosition()
+    callMap()
+    map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
+    await fetchData()
+    createExistingMarkers()
+    loading.value = false
+    markersInRange()
+  } catch (error) {
+    alert(`Geolocation error: ${error}, Turn on Location in your settings`)
+    loading.value = false
+  }
 })
 
 onUnmounted(() => {
