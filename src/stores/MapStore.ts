@@ -23,7 +23,6 @@ export const useMapStore = defineStore('map', () => {
   const existingMarkers: Ref<ExistingMarker[] | undefined> = ref()
   const waypoint = ref()
   const currentLocationMarker = ref()
-  const markersInrange = ref([])
 
   // Shared Vuetify instance for all popups
   const sharedVuetify = createVuetify({
@@ -198,20 +197,6 @@ export const useMapStore = defineStore('map', () => {
     waypoint.value = ''
   }
 
-  function markersInRange() {
-    if (!coords.value.latitude || !coords.value.longitude) return []
-
-    const userLatLng = L.latLng(coords.value.latitude, coords.value.longitude)
-    const data = existingMarkers.value ? existingMarkers.value.map((e) => e.data) : fetchedData.value
-
-    return data
-      ?.map((e) => {
-        const markerLatLng = L.latLng(e.latitude, e.longitude)
-        const distance = userLatLng.distanceTo(markerLatLng)
-        return { ...e, distance }
-      })
-      .filter((e) => e.distance < 1000)
-  }
   return {
     map,
     marker,
@@ -223,6 +208,6 @@ export const useMapStore = defineStore('map', () => {
     createWaypoint,
     waypoint,
     cancelNavigation,
-    markersInRange,
+    existingMarkers
   }
 })

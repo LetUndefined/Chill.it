@@ -44,7 +44,7 @@ const createRoute = async () => {
 }
 
 const conversion = computed(() => {
-  return Number(props.distance) / 100
+  return Number(props.distance) / 1000
 })
 </script>
 

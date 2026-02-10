@@ -28,7 +28,7 @@ header {
   left: 0;
   right: 0;
   height: 60px;
-  background: var(--gradient-blue);
+  background: var(--gradient-black);
   color: var(--white);
   display: flex;
   align-items: center;

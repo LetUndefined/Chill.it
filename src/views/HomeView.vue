@@ -9,7 +9,7 @@ import { getCurrentPosition } from '@/services/geolocation'
 
 const mapStore = useMapStore()
 const { map, coords, waypoint } = storeToRefs(mapStore)
-const { callMap, setMarker, createExistingMarkers, cancelNavigation, markersInRange } = mapStore
+const { callMap, setMarker, createExistingMarkers, cancelNavigation } = mapStore
 
 const supaStore = useSupaStore()
 const { fetchData } = supaStore
@@ -24,7 +24,6 @@ onMounted(async () => {
     await fetchData()
     createExistingMarkers()
     loading.value = false
-    markersInRange()
   } catch (error) {
     alert(`Geolocation error: ${error}, Turn on Location in your settings`)
     loading.value = false

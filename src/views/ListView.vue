@@ -5,12 +5,13 @@ import { useSupaStore } from '@/stores/supaBase'
 import { storeToRefs } from 'pinia'
 import { computed, onMounted } from 'vue'
 import { getCurrentPosition } from '@/services/geolocation'
+import { markersInRange } from '@/services/filterLogic'
 const supaStore = useSupaStore()
 const { fetchedData } = storeToRefs(supaStore)
 const { fetchData } = supaStore
+import { distance } from '@/services/filterLogic'
 
 const mapStore = useMapStore()
-const { markersInRange } = mapStore
 const { coords } = storeToRefs(mapStore)
 
 onMounted(async () => {
@@ -27,7 +28,7 @@ onMounted(async () => {
 })
 
 const markers = computed(() => {
-  return markersInRange()
+  return markersInRange(distance.value)
 })
 </script>
 
@@ -37,9 +38,19 @@ const markers = computed(() => {
       <h1>Locations Near <span>You</span></h1>
       <p>Find beautiful locations near you, swipe through the options below!</p>
     </div>
+    <div class="filters">
+      <div class="distance">
+        <v-select
+          label="Distance"
+          :items="['All', 5, 10, 15, 20, 25]"
+          variant="solo"
+          v-model="distance"
+        ></v-select>
+      </div>
+    </div>
     <div class="card-container">
       <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="600">
-        <v-carousel-item v-for="location in markers" :key="location.id">
+        <v-carousel-item v-for="(location, index) in markers" :key="index">
           <LocationCard
             :title="location.title"
             :chill_level="location.chill_level"
@@ -64,6 +75,7 @@ const markers = computed(() => {
   flex-direction: column;
   min-height: 100vh;
   background: var(--gradient-bg);
+  overflow-y: auto;
 }
 
 .title {
@@ -96,6 +108,23 @@ const markers = computed(() => {
   letter-spacing: 0.02em;
   text-align: center;
   max-width: 350px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+
+.distance {
+  display: flex;
+  width: 100%;
+}
+
+:deep(.v-field) {
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 20px;
 }
 
 .card-container {

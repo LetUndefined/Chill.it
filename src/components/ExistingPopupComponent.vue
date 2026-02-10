@@ -28,8 +28,12 @@ const props = defineProps<{
 const isOwner = ref(false)
 
 onMounted(async () => {
-  const { data: { user } } = await supabase.auth.getUser()
-  isOwner.value = user?.id === props.userId
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  isOwner.value = !user?.user_metadata.is_admin
+    ? user?.id === props.userId
+    : user?.user_metadata.is_admin
 })
 
 async function removeMarker() {
