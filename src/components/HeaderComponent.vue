@@ -15,7 +15,10 @@ const handleLogOut = async () => {
 <template>
   <header>
     <div class="header-container">
-      <h1>Chill it</h1>
+      <h1 class="logo">
+        <span class="logo-chill">chill</span><span class="logo-dot"></span
+        ><span class="logo-it">it</span>
+      </h1>
       <LogOut @click="handleLogOut" />
     </div>
   </header>
@@ -44,12 +47,46 @@ header {
   justify-content: space-between;
 }
 
-h1 {
+.logo {
   margin: 0;
-  font-size: 24px;
-  text-transform: uppercase;
-  padding: 0.25rem 0.5rem;
-  border: 1px solid var(--white);
-  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  gap: 1px;
+}
+
+.logo-chill {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 3px;
+  color: var(--white);
+  text-shadow:
+    0 0 7px rgba(121, 194, 208, 0.5),
+    0 0 20px rgba(121, 194, 208, 0.15);
+}
+
+.logo-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--purple);
+  display: inline-block;
+  margin: 0 4px;
+  align-self: center;
+  position: relative;
+  top: 3px;
+  box-shadow:
+    0 0 6px var(--purple),
+    0 0 16px rgba(150, 77, 251, 0.35);
+}
+
+.logo-it {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--white);
+  text-shadow:
+    0 0 7px rgba(121, 194, 208, 0.5),
+    0 0 20px rgba(121, 194, 208, 0.15);
 }
 </style>

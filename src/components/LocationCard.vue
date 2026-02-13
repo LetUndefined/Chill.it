@@ -168,7 +168,6 @@ const conversion = computed(() => {
   margin: 1rem;
   text-transform: uppercase;
   border-radius: 20px;
-  /* border: 1px solid var(--black); */
   box-shadow: 0px 2px 3px 0px var(--black);
   background: var(--purple);
   color: var(--white);

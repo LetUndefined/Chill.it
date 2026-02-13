@@ -35,11 +35,11 @@ const markers = computed(() => {
 
 <template>
   <div class="container">
-    <div class="title">
+    <section class="title">
       <h1>Locations Near <span>You</span></h1>
       <p>Find beautiful locations near you, swipe through the options below!</p>
-    </div>
-    <div class="filters">
+    </section>
+    <section class="filters">
       <div class="distance">
         <v-select
           label="Distance"
@@ -48,8 +48,8 @@ const markers = computed(() => {
           v-model="distance"
         ></v-select>
       </div>
-    </div>
-    <div class="card-container">
+    </section>
+    <section class="card-container">
       <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="600">
         <v-carousel-item v-for="(location, index) in markers" :key="index">
           <LocationCard
@@ -66,7 +66,7 @@ const markers = computed(() => {
           />
         </v-carousel-item>
       </v-carousel>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -82,7 +82,7 @@ const markers = computed(() => {
 .title {
   display: flex;
   align-items: center;
-  margin: 4.5rem 0 0 0;
+  margin: 5rem 0 0 0;
   justify-content: center;
   flex-direction: column;
 }
