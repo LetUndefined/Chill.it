@@ -82,7 +82,7 @@ const markers = computed(() => {
 .title {
   display: flex;
   align-items: center;
-  margin: 6rem 0 0 0;
+  margin: 4.5rem 0 0 0;
   justify-content: center;
   flex-direction: column;
 }

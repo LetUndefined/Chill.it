@@ -35,7 +35,7 @@ footer {
   left: 0;
   right: 0;
   height: 50px;
-  background: var(--gradient-black);
+  background: var(--black);
   color: white;
   display: flex;
   align-items: center;
