@@ -1,6 +1,17 @@
 <script setup lang="ts">
-import { Map, List } from 'lucide-vue-next'
+import { Map, List, Code } from 'lucide-vue-next'
 import router from '@/router'
+import { onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAdminStore } from '@/stores/AdminStore'
+
+const adminStore = useAdminStore()
+const { isAdmin } = storeToRefs(adminStore)
+const { adminCheck } = adminStore
+
+onMounted(async () => {
+  await adminCheck(null)
+})
 </script>
 
 <template>
@@ -10,6 +21,9 @@ import router from '@/router'
     </button>
     <button class="footer-button list" @click="router.push({ name: 'listview' })">
       <List />
+    </button>
+    <button class="footer-button list" v-if="isAdmin" @click="router.push({ name: 'adminview' })">
+      <Code />
     </button>
   </footer>
 </template>

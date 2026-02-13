@@ -43,10 +43,16 @@ const handleSubmit = () => {
   <modal-component v-if="modalTrigger">
     <div class="form-container">
       <h1>Location Information</h1>
-      <form @submit.prevent>
+      <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <label for="name">Name</label>
-          <input id="name" type="text" placeholder="Enter your name" v-model="formData.title" />
+          <input
+            id="name"
+            type="text"
+            placeholder="Enter your name"
+            v-model="formData.title"
+            required
+          />
         </div>
 
         <div class="form-group">
@@ -58,6 +64,7 @@ const handleSubmit = () => {
             v-model="formData.chill_level"
             active-color="secondary"
             color="white"
+            required
           />
         </div>
 
@@ -71,6 +78,7 @@ const handleSubmit = () => {
             placeholder="Enter your message"
             v-model="formData.description"
             maxlength="100"
+            required
           ></textarea>
         </div>
 
@@ -82,6 +90,7 @@ const handleSubmit = () => {
             variant="solo-filled"
             v-model="formData.visiting"
             density="compact"
+            required
           ></v-select>
         </div>
 
@@ -93,6 +102,7 @@ const handleSubmit = () => {
             variant="solo"
             v-model="formData.vibe"
             density="compact"
+            required
           ></v-select>
         </div>
 
@@ -104,20 +114,23 @@ const handleSubmit = () => {
             variant="solo"
             v-model="formData.accessibility"
             density="compact"
+            required
           ></v-select>
         </div>
 
-        <button class="submit-btn" @click="handleSubmit">Submit</button>
+        <div class="form-group">
+          <input
+            type="file"
+            id="file-upload-button"
+            accept="image/*"
+            capture="environment"
+            @change="handlePhotoCapture"
+            required
+          />
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
       </form>
-      <div>
-        <input
-          type="file"
-          id="file-upload-button"
-          accept="image/*"
-          capture="environment"
-          @change="handlePhotoCapture"
-        />
-      </div>
     </div>
   </modal-component>
 </template>
@@ -232,6 +245,7 @@ input[type='file'] {
 }
 
 .submit-btn {
+  position: relative;
   width: 100%;
   padding: 0.75rem;
   margin-top: 1rem;

@@ -21,6 +21,8 @@ export const useSupaStore = defineStore('supaStore', () => {
     visiting: '',
     vibe: '',
     accessibility: '',
+    handle_approval: false,
+    approved: false,
   }
   const formData = ref({
     title: '',
@@ -29,6 +31,8 @@ export const useSupaStore = defineStore('supaStore', () => {
     visiting: '',
     vibe: '',
     accessibility: '',
+    handle_approval: false,
+    approved: false,
   })
 
   const fetchedData: Ref<SupabaseTable[] | null> = ref(null)
@@ -71,7 +75,7 @@ export const useSupaStore = defineStore('supaStore', () => {
   }
 
   async function fetchData() {
-    const { data, error } = await supabase.from('chill_spots').select()
+    const { data, error } = await supabase.from('chill_spots').select().eq('approved', true)
 
     if (data) {
       fetchedData.value = data.map((e) => {
@@ -91,6 +95,7 @@ export const useSupaStore = defineStore('supaStore', () => {
           latitude: e.latitude,
           longitude: e.longitude,
           user_id: e.user_id,
+          approved: e.approved,
         }
         return setMarker
       })

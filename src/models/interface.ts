@@ -30,6 +30,8 @@ export interface SupabaseTable {
   latitude: number
   longitude: number
   user_id?: string
+  approved?: boolean
+  handle_approval?: boolean
 }
 
 export interface ExistingMarker {

@@ -19,7 +19,7 @@ const props = defineProps<{
   imageUrl: string
   latitude: number
   longitude: number
-  distance: number
+  distance?: number
 }>()
 
 const createRoute = async () => {

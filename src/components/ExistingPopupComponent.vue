@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { Circle, Clock, Sparkle, PersonStanding } from 'lucide-vue-next'
 import { useMapStore } from '@/stores/MapStore'
 import { useSupaStore } from '@/stores/supaBase'
-import { supabase } from '@/stores/supaBase'
+import { useAdminStore } from '@/stores/AdminStore'
+import { storeToRefs } from 'pinia'
 
 const supaStore = useSupaStore()
 const { deleteData } = supaStore
+
+const adminStore = useAdminStore()
+const { isAdmin, isOwner } = storeToRefs(adminStore)
+const { adminCheck } = adminStore
 
 const mapStore = useMapStore()
 const { deleteExistingMarker, createWaypoint } = mapStore
@@ -22,18 +27,11 @@ const props = defineProps<{
   imageUrl: string
   latitude: number
   longitude: number
-  userId?: string
+  userId: string | null
 }>()
 
-const isOwner = ref(false)
-
 onMounted(async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-  isOwner.value = !user?.user_metadata.is_admin
-    ? user?.id === props.userId
-    : user?.user_metadata.is_admin
+  await adminCheck(props.userId)
 })
 
 async function removeMarker() {
@@ -95,7 +93,7 @@ const createRoute = () => {
         </div>
       </div>
       <div class="buttons">
-        <button v-if="isOwner" class="delete" @click="removeMarker">Delete</button>
+        <button v-if="isOwner || isAdmin" class="delete" @click="removeMarker">Delete</button>
         <button class="navigate" @click="createRoute">Navigate</button>
       </div>
     </div>

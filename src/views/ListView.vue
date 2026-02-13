@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia'
 import { computed, onMounted } from 'vue'
 import { getCurrentPosition } from '@/services/geolocation'
 import { markersInRange } from '@/services/filterLogic'
+
 const supaStore = useSupaStore()
 const { fetchedData } = storeToRefs(supaStore)
 const { fetchData } = supaStore
@@ -122,9 +123,10 @@ const markers = computed(() => {
 }
 
 :deep(.v-field) {
-  background: rgba(255, 255, 255, 0.2);
-
+  border: 2px solid rgba(95, 93, 93, 0.544);
   border-radius: 20px;
+  color: var(--black);
+  font-size: 0.9rem;
 }
 
 .card-container {

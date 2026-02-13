@@ -135,6 +135,7 @@ export const useMapStore = defineStore('map', () => {
           latitude: Number(e.latitude),
           longitude: Number(e.longitude),
           userId: e.user_id,
+          approved: e.approved,
         })
 
         app.use(sharedVuetify)
@@ -208,6 +209,6 @@ export const useMapStore = defineStore('map', () => {
     createWaypoint,
     waypoint,
     cancelNavigation,
-    existingMarkers
+    existingMarkers,
   }
 })
