@@ -26,9 +26,15 @@ onMounted(async () => {
       </section>
       <section class="approvals">
         <div class="text">
-          <h4>Pending Approvals</h4>
+          <h4>Pending Markers</h4>
         </div>
         <div class="table-container">
+          <div class="no-items" v-if="nonApprovedData?.length === 0">
+            <h4>No pending markers</h4>
+          </div>
+          <div class="item-text" v-if="nonApprovedData && nonApprovedData?.length > 0">
+            <h4>{{ nonApprovedData?.length }} pending marker(s)</h4>
+          </div>
           <div v-for="(location, index) in nonApprovedData" :key="index">
             <ExpansianPanel
               :title="location.title"
@@ -112,7 +118,7 @@ onMounted(async () => {
 
 .text h4 {
   margin: 0 0rem 0.5rem 0.5rem;
-  color: var(--purple);
+  color: var(--green);
   text-shadow: 0px 1px var(--black);
 }
 
@@ -124,6 +130,10 @@ onMounted(async () => {
   height: 100%;
   box-shadow: 0px 2px 5px var(--white);
   border-radius: 20px;
+}
+
+.item-text {
+  margin: 0rem 0.5rem 1rem;
 }
 
 .approval-details {
