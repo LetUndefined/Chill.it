@@ -14,7 +14,6 @@ const informationDetail = ref()
 onMounted(async () => {
   await fetchNonApproved()
   informationDetail.value = await fetchAll()
-  console.log(informationDetail.value.users.length)
 })
 </script>
 
@@ -47,7 +46,12 @@ onMounted(async () => {
         </div>
       </section>
       <section class="approval-details">
-        <InformationBlock v-if="informationDetail" :users="informationDetail.users.length" />
+        <InformationBlock
+          v-if="informationDetail"
+          :users="informationDetail.users.length"
+          :approved="informationDetail.approved.length"
+          :denied="informationDetail.denied.length"
+        />
       </section>
     </div>
   </div>
@@ -59,7 +63,7 @@ onMounted(async () => {
   flex-direction: column;
   background-color: var(--black);
   min-height: 100%;
-  padding: 1rem;
+  padding: 2rem 0;
 }
 .title {
   display: flex;

@@ -85,7 +85,8 @@ export const useAdminStore = defineStore('admin', () => {
 
     return {
       users: [...new Set(data.map((e) => e.user_id))],
-      approvals: data.map((e) => e.approved),
+      approved: data.filter((e) => e.approved === true),
+      denied: data.filter((e) => e.approved === false),
     }
   }
 

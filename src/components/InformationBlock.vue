@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const props = defineProps<{
   users?: number
+  approved: number
+  denied: number
 }>()
 </script>
 
@@ -13,12 +15,12 @@ const props = defineProps<{
 
     <div class="item-detail">
       <h4>Approved</h4>
-      <span>{{ props.users }}</span>
+      <span>{{ props.approved }}</span>
     </div>
 
     <div class="item-detail">
       <h4>Denied</h4>
-      <span>{{ props.users }}</span>
+      <span>{{ props.denied }}</span>
     </div>
   </div>
 </template>
@@ -40,10 +42,20 @@ const props = defineProps<{
   height: 6rem;
   width: 10rem;
   text-align: center;
-  box-shadow: 0px 2px 1px var(--white);
+  box-shadow: 0px 1px 5px var(--white);
+  gap: 0.5rem;
 }
 
-.item-detail h1 {
-  color: white;
+.item-detail h4 {
+  text-transform: uppercase;
+  color: var(--white);
+  font-size: 14px;
+}
+
+.item-detail span {
+  font-weight: 900;
+  font-size: 30px;
+  color: var(--green);
+  text-shadow: 0px 1px var(--black);
 }
 </style>
