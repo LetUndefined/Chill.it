@@ -6,11 +6,12 @@ import { storeToRefs } from 'pinia'
 import { computed, onMounted } from 'vue'
 import { getCurrentPosition } from '@/services/geolocation'
 import { markersInRange } from '@/services/filterLogic'
+import InformationBlock from '@/components/InformationBlock.vue'
+import { distance } from '@/services/filterLogic'
 
 const supaStore = useSupaStore()
 const { fetchedData } = storeToRefs(supaStore)
 const { fetchData } = supaStore
-import { distance } from '@/services/filterLogic'
 
 const mapStore = useMapStore()
 const { coords } = storeToRefs(mapStore)
@@ -134,7 +135,7 @@ const markers = computed(() => {
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0rem 0 2rem 0;
+  padding: 0rem 0 3rem 0;
 }
 
 :deep(.v-btn--icon) {
@@ -143,14 +144,12 @@ const markers = computed(() => {
   transition: all 0.3s ease;
 }
 
-:deep(.v-carousel) {
-  border-radius: 20px;
-  overflow: hidden;
+:deep(.card-content) {
+  padding: 1rem 1rem 0 2rem;
 }
 
 :deep(.v-responsive__content) {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 </style>

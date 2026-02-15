@@ -16,8 +16,9 @@ const handleLogOut = async () => {
   <header>
     <div class="header-container">
       <h1 class="logo">
-        <span class="logo-chill">chill</span><span class="logo-dot"></span
-        ><span class="logo-it">it</span>
+        <span class="logo-chill">chill</span>
+        <span class="logo-dot"></span>
+        <span class="logo-it">it</span>
       </h1>
       <LogOut @click="handleLogOut" />
     </div>

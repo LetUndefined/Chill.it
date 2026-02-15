@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import ExpansianPanel from '@/components/ExpansianPanel.vue'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useAdminStore } from '@/stores/AdminStore'
 import { storeToRefs } from 'pinia'
+import InformationBlock from '@/components/InformationBlock.vue'
 
 const adminStore = useAdminStore()
 const { nonApprovedData } = storeToRefs(adminStore)
-const { fetchNonApproved } = adminStore
+const { fetchNonApproved, fetchAll } = adminStore
+
+const informationDetail = ref()
 
 onMounted(async () => {
   await fetchNonApproved()
+  informationDetail.value = await fetchAll()
+  console.log(informationDetail.value.users.length)
 })
 </script>
 
@@ -41,11 +46,21 @@ onMounted(async () => {
           </div>
         </div>
       </section>
+      <section class="approval-details">
+        <InformationBlock v-if="informationDetail" :users="informationDetail.users.length" />
+      </section>
     </div>
   </div>
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--black);
+  min-height: 100%;
+  padding: 1rem;
+}
 .title {
   display: flex;
   align-items: center;
@@ -75,17 +90,10 @@ onMounted(async () => {
   text-align: center;
   max-width: 350px;
 }
-.container {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--black);
-  height: 100vh;
-  padding: 2rem 1rem;
-}
 
 .dashboard-content {
   background-color: rgb(103, 101, 101);
-  height: 100%;
+  min-height: 100vh;
   border-radius: 20px;
 }
 
@@ -95,12 +103,13 @@ onMounted(async () => {
 
 .approvals {
   margin: 1rem;
-  height: 600px;
+  height: 500px;
 }
 
-.approvals h4 {
+.text h4 {
   margin: 0 0rem 0.5rem 0.5rem;
   color: var(--purple);
+  text-shadow: 0px 1px var(--black);
 }
 
 .table-container {
@@ -111,5 +120,9 @@ onMounted(async () => {
   height: 100%;
   box-shadow: 0px 2px 5px var(--white);
   border-radius: 20px;
+}
+
+.approval-details {
+  margin-top: 4rem;
 }
 </style>

@@ -76,6 +76,19 @@ export const useAdminStore = defineStore('admin', () => {
     fetchNonApproved()
   }
 
+  const fetchAll = async () => {
+    const { data, error } = await supabase.from('chill_spots').select().eq('handle_approval', true)
+
+    if (error) {
+      throw error
+    }
+
+    return {
+      users: [...new Set(data.map((e) => e.user_id))],
+      approvals: data.map((e) => e.approved),
+    }
+  }
+
   return {
     isAdmin,
     isOwner,
@@ -83,5 +96,6 @@ export const useAdminStore = defineStore('admin', () => {
     adminCheck,
     fetchNonApproved,
     handleApproval,
+    fetchAll,
   }
 })
