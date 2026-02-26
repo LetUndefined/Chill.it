@@ -10,17 +10,17 @@ const props = defineProps<{
   <div class="item-container">
     <div class="item-detail">
       <h4>Unique users</h4>
-      <span>{{ props.users }}</span>
+      <span id="unique">{{ props.users }}</span>
     </div>
 
     <div class="item-detail">
       <h4>Approved</h4>
-      <span>{{ props.approved }}</span>
+      <span id="approved">{{ props.approved }}</span>
     </div>
 
     <div class="item-detail">
       <h4>Denied</h4>
-      <span>{{ props.denied }}</span>
+      <span id="denied"> {{ props.denied }}</span>
     </div>
   </div>
 </template>
@@ -42,7 +42,7 @@ const props = defineProps<{
   height: 6rem;
   width: 10rem;
   text-align: center;
-  box-shadow: 0px 1px 5px var(--white);
+  box-shadow: 0px 1px 2px var(--white);
   gap: 0.5rem;
 }
 
@@ -55,7 +55,11 @@ const props = defineProps<{
 .item-detail span {
   font-weight: 900;
   font-size: 30px;
-  color: var(--green);
+  color: var(--white);
   text-shadow: 0px 1px var(--black);
+}
+
+.item-detail #denied {
+  color: rgb(231, 84, 84);
 }
 </style>

@@ -41,7 +41,6 @@ export const useSupaStore = defineStore('supaStore', () => {
   const photoPreview = ref('')
 
   async function insertData() {
-    console.log(latLng)
     let imageUrl = ''
 
     if (photoFile.value) {

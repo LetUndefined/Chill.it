@@ -164,12 +164,12 @@ const conversion = computed(() => {
 }
 
 .buttons > * {
-  padding: 0.5rem 0.5rem;
+  padding: 0.5rem 0.75rem;
   margin: 1rem;
   text-transform: uppercase;
   border-radius: 20px;
   box-shadow: 0px 2px 3px 0px var(--black);
-  background: var(--purple);
+  background: var(--primary-color);
   color: var(--white);
   font-weight: 600;
 }

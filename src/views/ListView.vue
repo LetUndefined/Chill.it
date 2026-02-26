@@ -6,7 +6,6 @@ import { storeToRefs } from 'pinia'
 import { computed, onMounted } from 'vue'
 import { getCurrentPosition } from '@/services/geolocation'
 import { markersInRange } from '@/services/filterLogic'
-import InformationBlock from '@/components/InformationBlock.vue'
 import { distance } from '@/services/filterLogic'
 
 const supaStore = useSupaStore()
@@ -21,12 +20,11 @@ onMounted(async () => {
     if (!coords.value.latitude || !coords.value.longitude) {
       coords.value = await getCurrentPosition()
     }
-    if (!fetchedData.value) {
-      await fetchData()
-    }
   } catch (error) {
     console.error(`Geolocation error: ${error}`)
   }
+
+  fetchData()
 })
 
 const markers = computed(() => {

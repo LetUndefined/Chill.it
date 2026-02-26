@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAdminStore } from '@/stores/AdminStore'
+import { computed } from 'vue'
 
 const props = defineProps<{
   title: string
@@ -10,6 +11,7 @@ const props = defineProps<{
   accessibility: string
   imageUrl: string
   id: string
+  openPanels: boolean
 }>()
 
 const adminStore = useAdminStore()
@@ -18,12 +20,16 @@ const { handleApproval } = adminStore
 const handleMarker = async (approval: boolean, id: string) => {
   await handleApproval(approval, id)
 }
+
+const isOpen = computed(() => {
+  return props.openPanels ? 'open' : ''
+})
 </script>
 
 <template>
   <div class="card-container">
-    <v-expansion-panels>
-      <v-expansion-panel :title="props.title">
+    <v-expansion-panels v-model="isOpen">
+      <v-expansion-panel :title="props.title" value="open">
         <v-expansion-panel-text>
           <div class="detail-container">
             <div class="detail-item">

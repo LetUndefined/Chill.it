@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ExpansianPanel from '@/components/ExpansianPanel.vue'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAdminStore } from '@/stores/AdminStore'
 import { storeToRefs } from 'pinia'
 import InformationBlock from '@/components/InformationBlock.vue'
@@ -10,6 +10,19 @@ const { nonApprovedData } = storeToRefs(adminStore)
 const { fetchNonApproved, fetchAll } = adminStore
 
 const informationDetail = ref()
+const openPanels = ref(false)
+
+const status = computed(() => {
+  if (openPanels.value) {
+    return 'Close All'
+  } else {
+    return 'Open All'
+  }
+})
+
+function handleOpenPanels() {
+  openPanels.value = !openPanels.value
+}
 
 onMounted(async () => {
   await fetchNonApproved()
@@ -34,6 +47,7 @@ onMounted(async () => {
           </div>
           <div class="item-text" v-if="nonApprovedData && nonApprovedData?.length > 0">
             <h4>{{ nonApprovedData?.length }} pending marker(s)</h4>
+            <button class="openAll" @click="handleOpenPanels">{{ status }}</button>
           </div>
           <div v-for="(location, index) in nonApprovedData" :key="index">
             <ExpansianPanel
@@ -47,6 +61,7 @@ onMounted(async () => {
               :longitude="location.longitude"
               :latitude="location.latitude"
               :id="location.id"
+              :openPanels="openPanels"
             />
           </div>
         </div>
@@ -133,10 +148,22 @@ onMounted(async () => {
 }
 
 .item-text {
+  display: flex;
+  justify-content: space-between;
   margin: 0rem 0.5rem 1rem;
 }
 
 .approval-details {
   margin-top: 4rem;
+}
+
+.openAll {
+  background-color: var(--primary-color);
+  padding: 0.5rem 0.75rem;
+  border-radius: 20px;
+  font-weight: 600;
+  box-shadow: 0px 0px 8px -2px black;
+  text-transform: uppercase;
+  font-size: 12px;
 }
 </style>
