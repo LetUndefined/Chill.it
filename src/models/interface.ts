@@ -39,3 +39,10 @@ export interface ExistingMarker {
   circle: L.Circle
   data: SupabaseTable
 }
+
+export interface Alert {
+  id: number
+  type: string
+  message: string
+  duration: number
+}

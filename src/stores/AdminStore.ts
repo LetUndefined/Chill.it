@@ -1,4 +1,5 @@
 import type { SupabaseTable } from '@/models/interface'
+import { notify } from '@/services/alert'
 import { supabase } from '@/stores/supaBase'
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'

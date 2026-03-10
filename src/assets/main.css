@@ -15,6 +15,10 @@
   --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e8f0f8 100%);
   --gradient-black: linear-gradient(to right, #000000 0%, #232323 50%, #414141 100%);
   --destructive: rgb(249, 61, 61);
+  --destructive-light: rgb(233, 165, 165);
+  --success-light: #7aeb96;
+  --warning: #ffa726;
+  --warning-light: #ffcc80;
 }
 
 * {

@@ -7,6 +7,7 @@ import InputForm from '@/components/InputForm.vue'
 import { modalTrigger } from '@/services/ModalTrigger'
 import { getCurrentPosition } from '@/services/geolocation'
 
+
 const mapStore = useMapStore()
 const { map, coords, waypoint } = storeToRefs(mapStore)
 const { callMap, setMarker, createExistingMarkers, cancelNavigation } = mapStore

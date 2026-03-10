@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 import { type SupabaseTable, type Latlng } from '@/models/interface'
+import { notify } from '@/services/alert'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -52,6 +53,8 @@ export const useSupaStore = defineStore('supaStore', () => {
 
       if (uploadError) {
         console.error('Upload failed:', uploadError)
+        notify('Location add failed, unsupported file format', 'warning', 3000)
+
         return
       }
 
@@ -70,7 +73,10 @@ export const useSupaStore = defineStore('supaStore', () => {
 
     if (insertError) {
       console.error('Insert failed:', insertError)
+      notify('Location add failed', 'warning', 3000)
     }
+
+    notify('Location under review', 'info', 3000)
   }
 
   async function fetchData() {
@@ -109,6 +115,7 @@ export const useSupaStore = defineStore('supaStore', () => {
     if (error) {
       console.error('Deleting failed')
     }
+    notify('Location deleted successfully', 'destructive', 3000)
   }
 
   return {
