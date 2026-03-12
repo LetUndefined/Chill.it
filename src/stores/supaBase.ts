@@ -76,7 +76,7 @@ export const useSupaStore = defineStore('supaStore', () => {
       notify('Location add failed', 'warning', 3000)
     }
 
-    notify('Location under review', 'info', 3000)
+    notify('Location Under Review', 'info', 3000)
   }
 
   async function fetchData() {

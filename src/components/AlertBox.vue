@@ -31,7 +31,7 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
   display: flex;
   align-items: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  font-weight: 500;
+  font-weight: 700;
   animation: slideIn 0.3s ease-out;
   transition: all 0.3s ease;
 }
@@ -68,13 +68,13 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
 .info {
   background: var(--light-color);
   color: var(--black);
-  border: 3px solid var(--tertiary-color);
+  border: 2px solid var(--tertiary-color);
 }
 
 .success {
   background: var(--success-light);
   color: var(--black);
-  border: 3px solid var(--green);
+  border: 2px solid var(--green);
 }
 
 .success .closeBtn {
@@ -84,12 +84,12 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
 .warning {
   background: var(--warning-light);
   color: var(--black);
-  border: 3px solid var(--warning);
+  border: 2px solid var(--warning);
 }
 
 .destructive {
   background: var(--destructive-light);
   color: var(--black);
-  border: 3px solid var(--destructive);
+  border: 2px solid var(--destructive);
 }
 </style>
