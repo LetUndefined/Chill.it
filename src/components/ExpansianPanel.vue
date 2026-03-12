@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useAdminStore } from '@/stores/AdminStore'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
+
+const localVar = ref('')
 
 const props = defineProps<{
   title: string
@@ -21,9 +23,17 @@ const handleMarker = async (approval: boolean, id: string) => {
   await handleApproval(approval, id)
 }
 
-const isOpen = computed(() => {
-  return props.openPanels ? 'open' : ''
+const isOpen = computed({
+  get() {
+    return props.openPanels ? 'open' : ''
+  },
+
+  set(newValue) {
+
+  },
 })
+
+
 </script>
 
 <template>
