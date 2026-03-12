@@ -4,6 +4,7 @@ import { Clock, Sparkle, PersonStanding, Circle } from 'lucide-vue-next'
 import router from '@/router'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
+import { notify } from '@/services/alert'
 
 const mapStore = useMapStore()
 const { createWaypoint } = mapStore
@@ -31,12 +32,13 @@ const createRoute = async () => {
   const checkMap = () => {
     if (map.value) {
       createWaypoint(props.latitude, props.longitude)
+      notify('Navigation started', 'success', 3000)
     } else if (attempts < maxAttempts) {
       attempts++
       setTimeout(checkMap, 100)
-      console.log(attempts)
     } else {
       console.error('Map failed to initialize')
+      notify('Routing Failed', 'warning', 3000)
     }
   }
 
