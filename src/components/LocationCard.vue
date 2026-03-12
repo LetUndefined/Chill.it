@@ -5,12 +5,21 @@ import router from '@/router'
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import { notify } from '@/services/alert'
+import { useAdminStore } from '@/stores/AdminStore'
+import { useSupaStore } from '@/stores/supaBase'
 
 const mapStore = useMapStore()
-const { createWaypoint } = mapStore
+const { createWaypoint, deleteExistingMarker } = mapStore
 const { map } = storeToRefs(mapStore)
 
+const adminStore = useAdminStore()
+const { isAdmin } = storeToRefs(adminStore)
+
+const supaStore = useSupaStore()
+const { deleteData } = supaStore
+
 const props = defineProps<{
+  id: string
   title: string
   chill_level: number
   description: string
@@ -48,6 +57,11 @@ const createRoute = async () => {
 const conversion = computed(() => {
   return Number(props.distance) / 1000
 })
+
+function handleDelete(id: string) {
+  deleteData(id)
+  deleteExistingMarker(id)
+}
 </script>
 
 <template>
@@ -104,6 +118,7 @@ const conversion = computed(() => {
         <button class="navigate" @click="createRoute">
           Navigate {{ conversion.toFixed(2) }} km
         </button>
+        <button class="delete" v-if="isAdmin" @click="handleDelete(props.id)">Delete Marker</button>
       </div>
     </v-card>
   </div>
@@ -114,13 +129,14 @@ const conversion = computed(() => {
   width: 400px;
   position: relative;
   border-radius: 20px;
+  height: 100%;
   box-shadow: var(--box-shadow-xl);
 }
 
 .v-card-title,
 .v-card-text {
   padding: 0;
-  margin: 1rem 0 2rem 0;
+  margin: 1rem 0 1.5rem 0;
 }
 
 .card-content {
@@ -161,17 +177,29 @@ const conversion = computed(() => {
 
 .buttons {
   display: flex;
+  padding: 1rem;
   gap: 1rem;
   justify-content: center;
+  flex-direction: column;
+  margin: 0 1rem 1rem 1rem;
 }
 
-.buttons > * {
+.buttons .navigate {
   padding: 0.5rem 0.75rem;
-  margin: 1rem;
   text-transform: uppercase;
   border-radius: 20px;
   box-shadow: 0px 2px 3px 0px var(--black);
   background: var(--primary-color);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.buttons .delete {
+  padding: 0.5rem 0.75rem;
+  text-transform: uppercase;
+  border-radius: 20px;
+  box-shadow: 0px 2px 3px 0px var(--black);
+  background: var(--destructive);
   color: var(--white);
   font-weight: 600;
 }
