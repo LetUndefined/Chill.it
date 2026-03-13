@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import SignInForm from '@/components/LoginForm.vue'
-import { CircleUserRound, KeyRound, ArrowBigLeftDash } from 'lucide-vue-next'
+import { Mail, Lock, ArrowBigLeftDash } from 'lucide-vue-next'
 import router from '@/router'
 import { useAuthStore } from '@/stores/Auth'
 import { storeToRefs } from 'pinia'
@@ -19,44 +19,53 @@ const handleSignUp = async () => {
   <div class="form-container">
     <SignInForm title="Sign Up">
       <div class="form-group">
-        <label for="email">Email</label>
+        <label for="email">EMAIL ADDRESS</label>
         <div class="input-wrapper">
-          <CircleUserRound color="var(--white)" class="icon" />
-          <input type="email" placeholder="Email" id="email" v-model="email" autocomplete="email" />
+          <Mail :size="18" class="input-icon" />
+          <input
+            type="email"
+            placeholder="you@example.com"
+            id="email"
+            v-model="email"
+            autocomplete="email"
+          />
+          <div class="input-accent"></div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">PASSWORD</label>
         <div class="input-wrapper">
-          <KeyRound color="var(--white)" class="icon" />
+          <Lock :size="18" class="input-icon" />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Enter your password"
             id="password"
             v-model="password"
             autocomplete="new-password"
           />
+          <div class="input-accent"></div>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="confirm-password">Confirm Password</label>
+        <label for="confirm-password">CONFIRM PASSWORD</label>
         <div class="input-wrapper">
-          <KeyRound color="var(--white)" class="icon" />
+          <Lock :size="18" class="input-icon" />
           <input
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirm your password"
             id="confirm-password"
             v-model="confirmedPassword"
             autocomplete="new-password"
           />
+          <div class="input-accent"></div>
         </div>
       </div>
 
       <div class="form-button">
         <div class="return" @click="router.go(-1)">
-          <ArrowBigLeftDash color="var(--white)" class="arrow" />
+          <ArrowBigLeftDash color="var(--black)" class="arrow" />
           <span>Back</span>
         </div>
         <button type="button" @click="handleSignUp" class="submit">Submit</button>
@@ -68,16 +77,10 @@ const handleSignUp = async () => {
 <style scoped>
 .form-container {
   height: 100vh;
-  background: url('@/assets/images/nature-background.jpg');
+  background: url('@/assets/images/chill-it-background.png');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
 }
 
 .form-button {
@@ -87,42 +90,89 @@ const handleSignUp = async () => {
   margin-top: 1.5rem;
 }
 
-.form-group label {
-  color: var(--white);
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.form-group > label {
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-left: 2px;
 }
 
 .input-wrapper {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 8px;
-  box-shadow: 0px 2px 2px var(--white);
-  padding: 5px 10px;
-  border-radius: 20px;
+  gap: 12px;
+  padding: 1rem 1.125rem;
+  border: 1.5px solid var(--black);
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 .input-wrapper:focus-within {
-  box-shadow: 0px 2px 2px var(--primary-color);
+  border-color: #4ecdc4;
 }
 
-.input-wrapper input,
-.input-wrapper input::placeholder {
+.input-icon {
+  color: var(--black);
+  flex-shrink: 0;
+  transition: color 0.3s ease;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: #4ecdc4;
+}
+
+.input-wrapper input {
+  flex: 1;
+  border: none;
   outline: none;
-  color: var(--white);
+  background: transparent;
+  font-size: 15px;
+  color: #2c3e50;
+}
+
+.input-wrapper input::placeholder {
+  color: var(--black);
+}
+
+.input-accent {
+  position: absolute;
+  bottom: -1.5px;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: linear-gradient(90deg, #4ecdc4, #44a3d5);
+  border-radius: 0 0 8px 8px;
+  transition: width 0.4s ease;
+}
+
+.input-wrapper:focus-within .input-accent {
+  width: 100%;
 }
 
 .submit {
-  box-shadow: 0px 2px 2px var(--white);
-  padding: 0.25rem 1rem;
+  padding: 0.5rem 1.25rem;
   border-radius: 10px;
-  color: var(--white);
+  color: var(--black);
   position: relative;
+  border: 1.5px solid var(--black);
+  font-weight: 800;
 }
 .icon {
   opacity: 0.8;
 }
 
 .login span {
-  color: var(--white);
+  color: var(--black);
   cursor: pointer;
 }
 
@@ -135,16 +185,18 @@ const handleSignUp = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0px 2px 2px var(--white);
-  padding: 0.25rem 1rem 0.25rem 0.5rem;
   border-radius: 10px;
-  color: var(--white);
+  color: var(--black);
   gap: 1rem;
   cursor: pointer;
+  padding: 0.5rem 1rem 0.5rem 0.5rem;
+  font-weight: 800;
+  border: 1.5px solid var(--black);
 }
 
 .return span {
-  color: var(--white);
+  color: var(--black);
+  font-weight: 800;
 }
 
 @keyframes moveLeft {

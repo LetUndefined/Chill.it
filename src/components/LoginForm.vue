@@ -28,11 +28,12 @@ const props = defineProps<{
   width: 100%;
   max-width: 320px;
   min-height: 22rem;
-  padding: 1rem;
+  padding: 2rem;
   border-radius: 20px;
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(40px);
   gap: 1.5rem;
   margin: 1rem 0;
+  box-shadow: 0px 0px 10px -1px var(--black);
 }
 
 .form-content::before {
@@ -45,18 +46,14 @@ const props = defineProps<{
   border-radius: 20px;
   z-index: -1;
   opacity: 0;
-  box-shadow: 0 0 30px 10px rgba(255, 255, 255, 0.3);
-  animation: pulse 4s infinite ease-in-out;
 }
 
 .form-content h2 {
   font-weight: 900;
   text-transform: uppercase;
-  text-shadow: 0px 2px 2px var(--black);
   font-size: 2rem;
   position: relative;
-  color: var(--white);
-  opacity: 0.5;
+  color: var(--black);
 }
 
 @keyframes pulse {
