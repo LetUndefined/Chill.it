@@ -1,10 +1,12 @@
-<template>
-  <RouterView />
-</template>
-
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
+import AlertBox from '@/components/AlertBox.vue'
 </script>
+
+<template>
+  <AlertBox />
+  <RouterView />
+</template>
 
 <style>
 * {

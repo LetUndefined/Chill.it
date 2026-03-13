@@ -13,6 +13,7 @@ import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
 import { addPosition } from '@/config/mapIcons'
 import NewPopupComponent from '@/components/NewPopupComponent.vue'
 import ExistingPopupComponent from '@/components/ExistingPopupComponent.vue'
+import { notify } from '@/services/alert'
 
 export const useMapStore = defineStore('map', () => {
   const supaStore = useSupaStore()
@@ -161,14 +162,14 @@ export const useMapStore = defineStore('map', () => {
   function deleteExistingMarker(id: string) {
     const markerObj = existingMarkers.value?.find((m) => m.data.id === id)
 
-    if (markerObj) {
+    if (markerObj && map.value) {
       map.value.removeLayer(markerObj.marker)
       map.value.removeLayer(markerObj.circle)
       map.value.closePopup()
-
-      existingMarkers.value = existingMarkers.value?.filter((m) => m.data.id !== id)
-      fetchedData.value = fetchedData.value?.filter((d) => d.id !== id) || null
     }
+
+    existingMarkers.value = existingMarkers.value?.filter((m) => m.data.id !== id)
+    fetchedData.value = fetchedData.value?.filter((d) => d.id !== id) || null
   }
 
   function createWaypoint(latitude: number, longitude: number) {

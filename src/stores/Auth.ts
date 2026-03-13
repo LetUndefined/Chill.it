@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, type Ref } from 'vue'
 import { supabase } from './supaBase'
-import router from '@/router'
+
 
 export const useAuthStore = defineStore('auth', () => {
   const email: Ref<string> = ref('')

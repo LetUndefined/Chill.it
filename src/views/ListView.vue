@@ -49,7 +49,7 @@ const markers = computed(() => {
       </div>
     </section>
     <section class="card-container">
-      <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="600">
+      <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="100%">
         <v-carousel-item v-for="(location, index) in markers" :key="index">
           <LocationCard
             :title="location.title"
@@ -62,6 +62,7 @@ const markers = computed(() => {
             :longitude="location.longitude"
             :latitude="location.latitude"
             :distance="location.distance"
+            :id="location.id"
           />
         </v-carousel-item>
       </v-carousel>
@@ -76,6 +77,7 @@ const markers = computed(() => {
   min-height: 100vh;
   background: var(--gradient-bg);
   overflow-y: auto;
+  padding-bottom: 2rem;
 }
 
 .title {
@@ -133,7 +135,6 @@ const markers = computed(() => {
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding: 0rem 0 3rem 0;
 }
 
 :deep(.v-btn--icon) {
@@ -149,5 +150,6 @@ const markers = computed(() => {
 :deep(.v-responsive__content) {
   display: flex;
   justify-content: center;
+  padding-bottom: 2rem;
 }
 </style>
