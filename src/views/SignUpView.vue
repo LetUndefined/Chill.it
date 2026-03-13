@@ -68,7 +68,7 @@ const handleSignUp = async () => {
           <ArrowBigLeftDash color="var(--black)" class="arrow" />
           <span>Back</span>
         </div>
-        <button type="button" @click="handleSignUp" class="submit">Submit</button>
+        <button type="button" @click="handleSignUp" class="submit">Sign up</button>
       </div>
     </SignInForm>
   </div>

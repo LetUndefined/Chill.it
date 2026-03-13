@@ -49,7 +49,7 @@ const handleSignIn = async () => {
       </div>
 
       <div class="form-group">
-        <button type="button" class="submit" @click="handleSignIn">Submit</button>
+        <button type="button" class="submit" @click="handleSignIn">Login</button>
       </div>
 
       <div class="login">
