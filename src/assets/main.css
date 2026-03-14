@@ -113,7 +113,8 @@ body {
   }
 }
 
-.form-container button::before {
+.form-container button::before,
+.form-button button::before {
   position: absolute;
   content: '';
   top: 0;
@@ -126,6 +127,7 @@ body {
   transition: 0.2s ease-in-out;
 }
 
-.form-container button:hover::before {
+.form-container button:active::before,
+.form-button button:active::before {
   width: 100%;
 }

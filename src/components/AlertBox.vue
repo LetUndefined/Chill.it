@@ -4,7 +4,12 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
 
 <template>
   <div class="alert-container" v-if="alertSwitch">
-    <div class="alerts" v-for="(alert, index) in alertArray" :key="index" :class="alert.type">
+    <div
+      class="alerts"
+      v-for="(alert, index) in alertArray"
+      :key="index"
+      :class="alert.title.toLowerCase()"
+    >
       <div class="alert" v-if="alert">
         <div class="icon">
           <component :is="alert.icon" />

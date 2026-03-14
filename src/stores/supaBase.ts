@@ -115,7 +115,7 @@ export const useSupaStore = defineStore('supaStore', () => {
     if (error) {
       console.error('Deleting failed')
     }
-    notify('Error', 'Location deleted successfully', 'destructive', 3000)
+    notify('Destructive', 'Location deleted successfully', 'destructive', 3000)
   }
 
   return {

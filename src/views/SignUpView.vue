@@ -64,10 +64,10 @@ const handleSignUp = async () => {
       </div>
 
       <div class="form-button">
-        <div class="return" @click="router.go(-1)">
+        <button type="button" class="return" @click="router.go(-1)">
           <ArrowBigLeftDash color="var(--black)" class="arrow" />
           <span>Back</span>
-        </div>
+        </button>
         <button type="button" @click="handleSignUp" class="submit">Sign up</button>
       </div>
     </SignInForm>
@@ -183,6 +183,7 @@ const handleSignUp = async () => {
 
 .return {
   display: flex;
+  position: relative;
   justify-content: center;
   align-items: center;
   border-radius: 10px;

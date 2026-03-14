@@ -47,7 +47,7 @@ const createRoute = async () => {
       setTimeout(checkMap, 100)
     } else {
       console.error('Map failed to initialize')
-      notify('Warning', 'Routing Failed', 'warning', 3000)
+      notify('Warning', 'Routing Failed, Try Again', 'warning', 3000)
     }
   }
 

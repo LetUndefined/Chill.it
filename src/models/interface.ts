@@ -44,7 +44,6 @@ export interface Alert {
   icon: string
   title: string
   id: number
-  type: string
   message: string
   duration: number
 }
