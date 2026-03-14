@@ -110,7 +110,7 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
   border: 2px solid var(--warning);
 }
 
-.destructive {
+.error {
   background: var(--destructive-light);
   color: var(--black);
   border: 2px solid var(--destructive);

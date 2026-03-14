@@ -2,7 +2,7 @@ import type { Alert } from '@/models/interface'
 import { BadgeInfo, Ban, CheckCircle, ShieldAlert, type LucideProps } from 'lucide-vue-next'
 import { ref, type FunctionalComponent, type Ref } from 'vue'
 
-type AlertType = 'Destructive' | 'Warning' | 'Success' | 'Info'
+type AlertType = 'Error' | 'Warning' | 'Success' | 'Info'
 
 const alertArray: Ref<Alert[]> = ref([])
 const icon = ref()
@@ -10,13 +10,13 @@ const icon = ref()
 const alertSwitch = ref(false)
 
 const alertIcons: Record<AlertType, FunctionalComponent<LucideProps>> = {
-  Destructive: Ban,
+  Error: Ban,
   Success: CheckCircle,
   Warning: ShieldAlert,
   Info: BadgeInfo,
 }
 
-function notify(title: string, message: string, type: string, duration: number) {
+function notify(title: string, message: string, duration: number) {
   icon.value = alertIcons[title as AlertType]
   const randomId = Math.floor(Math.random() * 100)
   const newAlert = {

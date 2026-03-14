@@ -15,7 +15,7 @@ const handleSignIn = async () => {
   if (success) {
     router.push('/')
   } else {
-    notify('Destructive', 'Email or Password inccorect', 'destructive', 20000)
+    notify('Error', 'Email or Password inccorect', 20000)
   }
 }
 </script>

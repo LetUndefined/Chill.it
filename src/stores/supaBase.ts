@@ -53,7 +53,7 @@ export const useSupaStore = defineStore('supaStore', () => {
 
       if (uploadError) {
         console.error('Upload failed:', uploadError)
-        notify('Warning', 'Location add failed, unsupported file format', 'warning', 3000)
+        notify('Warning', 'Location add failed, unsupported file format', 3000)
 
         return
       }
@@ -73,10 +73,10 @@ export const useSupaStore = defineStore('supaStore', () => {
 
     if (insertError) {
       console.error('Insert failed:', insertError)
-      notify('Warning', 'Location add failed', 'warning', 3000)
+      notify('Warning', 'Location add failed', 3000)
     }
 
-    notify('Info', 'Location under review', 'info', 3000)
+    notify('Info', 'Location under review', 3000)
   }
 
   async function fetchData() {
@@ -115,7 +115,7 @@ export const useSupaStore = defineStore('supaStore', () => {
     if (error) {
       console.error('Deleting failed')
     }
-    notify('Destructive', 'Location deleted successfully', 'destructive', 3000)
+    notify('Error', 'Location deleted successfully', 3000)
   }
 
   return {
