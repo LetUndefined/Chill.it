@@ -4,6 +4,7 @@ import { Mail, Lock } from 'lucide-vue-next'
 import router from '@/router'
 import { useAuthStore } from '@/stores/Auth'
 import { storeToRefs } from 'pinia'
+import { notify } from '@/services/alert'
 
 const authStore = useAuthStore()
 const { email, password } = storeToRefs(authStore)
@@ -11,7 +12,11 @@ const { signIn } = authStore
 
 const handleSignIn = async () => {
   const success = await signIn()
-  if (success) router.push('/')
+  if (success) {
+    router.push('/')
+  } else {
+    notify('Error', 'Email or Password inccorect', 'destructive', 20000)
+  }
 }
 </script>
 

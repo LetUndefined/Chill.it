@@ -4,8 +4,20 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
 
 <template>
   <div class="alert-container" v-if="alertSwitch">
-    <div class="alert" v-for="(alert, index) in alertArray" :key="index" :class="alert.type">
-      {{ alert.message }}
+    <div class="alerts" v-for="(alert, index) in alertArray" :key="index" :class="alert.type">
+      <div class="alert" v-if="alert">
+        <div class="icon">
+          <component :is="alert.icon" />
+        </div>
+        <div class="information">
+          <div class="title">
+            {{ alert.title }}
+          </div>
+          <div class="message">
+            {{ alert.message }}
+          </div>
+        </div>
+      </div>
       <button class="closeBtn" @click="removeAlert(alert.id)">x</button>
     </div>
   </div>
@@ -24,7 +36,7 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
   max-width: 400px;
 }
 
-.alert {
+.alerts {
   position: relative;
   padding: 1rem 2.5rem 1rem 1rem;
   border-radius: 12px;
@@ -65,6 +77,12 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
   transition: all 0.2s ease;
 }
 
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .info {
   background: var(--light-color);
   color: var(--black);
@@ -91,5 +109,13 @@ import { alertArray, alertSwitch, removeAlert } from '@/services/alert'
   background: var(--destructive-light);
   color: var(--black);
   border: 2px solid var(--destructive);
+}
+
+.title {
+  font-weight: 900;
+}
+
+.message {
+  font-size: 12px;
 }
 </style>

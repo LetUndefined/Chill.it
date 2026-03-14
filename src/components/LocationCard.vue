@@ -41,13 +41,13 @@ const createRoute = async () => {
   const checkMap = () => {
     if (map.value) {
       createWaypoint(props.latitude, props.longitude)
-      notify('Navigation started', 'success', 3000)
+      notify('Success', 'Navigation started', 'success', 3000)
     } else if (attempts < maxAttempts) {
       attempts++
       setTimeout(checkMap, 100)
     } else {
       console.error('Map failed to initialize')
-      notify('Routing Failed', 'warning', 3000)
+      notify('Warning', 'Routing Failed', 'warning', 3000)
     }
   }
 
