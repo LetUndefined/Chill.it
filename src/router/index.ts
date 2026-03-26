@@ -56,12 +56,17 @@ router.beforeEach(async (to) => {
   const { adminCheck, isAdmin } = adminStore
 
   const { data, error } = await supabase.auth.getUser()
-  if (data.user?.id) {
-    await adminCheck(data.user?.id)
-    if (!isAdmin && to.name === 'adminview') {
-      return { name: 'home' }
+  try {
+    if (data.user?.id) {
+      await adminCheck(data.user?.id)
+      if (!isAdmin && to.name === 'adminview') {
+        return { name: 'home' }
+      }
     }
+  } catch (error) {
+    throw error
   }
+
   if ((error || !data.user) && to.name !== 'login' && to.name !== 'signup') {
     return { name: 'login' }
   }

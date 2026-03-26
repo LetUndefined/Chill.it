@@ -8,12 +8,13 @@ import { modalTrigger } from '@/services/ModalTrigger'
 
 const supaStore = useSupaStore()
 const { formData, photoPreview, photoFile } = storeToRefs(supaStore)
-const { insertData, resetValues, fetchData } = supaStore
+const { insertData, fetchData } = supaStore
 
 const mapStore = useMapStore()
 const { createExistingMarkers } = mapStore
 
 const photo = ref()
+const disabledBtn = ref(false)
 
 function handlePhotoCapture(event: Event) {
   const input = event.target as HTMLInputElement
@@ -28,14 +29,14 @@ function handlePhotoCapture(event: Event) {
 
 async function insertFormData() {
   await insertData()
-  formData.value = resetValues
   await fetchData()
   createExistingMarkers()
+  disabledBtn.value = false
 }
 
 const handleSubmit = () => {
+  disabledBtn.value = true
   insertFormData()
-  modalTrigger.value = false
 }
 </script>
 
@@ -129,7 +130,7 @@ const handleSubmit = () => {
           />
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+        <button :disabled="disabledBtn" type="submit" class="submit-btn">Submit</button>
       </form>
     </div>
   </modal-component>
