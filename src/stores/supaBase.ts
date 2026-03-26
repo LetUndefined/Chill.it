@@ -3,6 +3,8 @@ import { ref, type Ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 import { type SupabaseTable, type Latlng } from '@/models/interface'
 import { notify } from '@/services/alert'
+import { modalTrigger } from '@/services/ModalTrigger'
+
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -53,7 +55,7 @@ export const useSupaStore = defineStore('supaStore', () => {
 
       if (uploadError) {
         console.error('Upload failed:', uploadError)
-        notify('Warning', 'Location add failed, unsupported file format', 3000)
+        notify('Error', 'Location add failed, unsupported file format', 3000)
 
         return
       }
@@ -73,10 +75,12 @@ export const useSupaStore = defineStore('supaStore', () => {
 
     if (insertError) {
       console.error('Insert failed:', insertError)
-      notify('Warning', 'Location add failed', 3000)
+      return notify('Error', 'Location add failed', 3000)
+    } else {
+      notify('Info', 'Location under review', 3000)
+      modalTrigger.value = false
+      formData.value = resetValues
     }
-
-    notify('Info', 'Location under review', 3000)
   }
 
   async function fetchData() {
@@ -115,7 +119,7 @@ export const useSupaStore = defineStore('supaStore', () => {
     if (error) {
       console.error('Deleting failed')
     }
-    notify('Error', 'Location deleted successfully', 3000)
+    notify('Success', 'Location deleted successfully', 3000)
   }
 
   return {

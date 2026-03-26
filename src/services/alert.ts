@@ -18,7 +18,7 @@ const alertIcons: Record<AlertType, FunctionalComponent<LucideProps>> = {
 
 function notify(title: string, message: string, duration: number) {
   icon.value = alertIcons[title as AlertType]
-  const randomId = Math.floor(Math.random() * 100)
+  const randomId = crypto.randomUUID()
   const newAlert = {
     id: randomId,
     icon: icon.value,
@@ -32,7 +32,10 @@ function notify(title: string, message: string, duration: number) {
 
   setTimeout(() => {
     alertSwitch.value = false
-    alertArray.value.splice(0, 1)
+    alertArray.value.splice(
+      alertArray.value.findIndex((e) => e.id === randomId),
+      1,
+    )
   }, duration)
 
   return randomId

@@ -6,7 +6,7 @@ import { useSupaStore } from '@/stores/supaBase'
 import InputForm from '@/components/InputForm.vue'
 import { modalTrigger } from '@/services/ModalTrigger'
 import { getCurrentPosition } from '@/services/geolocation'
-
+import { notify } from '@/services/alert'
 
 const mapStore = useMapStore()
 const { map, coords, waypoint } = storeToRefs(mapStore)
@@ -26,7 +26,8 @@ onMounted(async () => {
     createExistingMarkers()
     loading.value = false
   } catch (error) {
-    alert(`Geolocation error: ${error}, Turn on Location in your settings`)
+    notify('Error', 'Turn on location on your device settings', 3000)
+    console.error(error)
     loading.value = false
   }
 })

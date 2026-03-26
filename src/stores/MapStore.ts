@@ -1,19 +1,15 @@
-import { ref, type Ref } from 'vue'
+import { ref, type Ref, type Component } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import L from 'leaflet'
 import type { Latlng, GeolocationCoordinates, ExistingMarker } from '@/models/interface'
 import { createApp } from 'vue'
 import 'leaflet-routing-machine'
-import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 
 import { useSupaStore } from './supaBase'
 import { currentPositionIcon, existingPositions } from '@/config/mapIcons'
 import { addPosition } from '@/config/mapIcons'
 import NewPopupComponent from '@/components/NewPopupComponent.vue'
 import ExistingPopupComponent from '@/components/ExistingPopupComponent.vue'
-import { notify } from '@/services/alert'
 
 export const useMapStore = defineStore('map', () => {
   const supaStore = useSupaStore()
@@ -25,12 +21,6 @@ export const useMapStore = defineStore('map', () => {
   const waypoint = ref()
   const currentLocationMarker = ref()
 
-  // Shared Vuetify instance for all popups
-  const sharedVuetify = createVuetify({
-    components,
-    directives,
-  })
-
   const coords: Ref<GeolocationCoordinates> = ref({
     latitude: 0,
     longitude: 0,
@@ -40,6 +30,22 @@ export const useMapStore = defineStore('map', () => {
     heading: null,
     speed: null,
   })
+
+  interface ContainerWithCleanup extends HTMLElement {
+    _cleanup?: () => void
+  }
+
+  function createPopupApp(
+    component: Component,
+    props: Record<string, unknown>,
+    containerElement: HTMLElement,
+  ) {
+    const app = createApp(component, props)
+    app.mount(containerElement)
+    ;(containerElement as ContainerWithCleanup)._cleanup = () => app.unmount()
+
+    return app
+  }
 
   function callMap() {
     if (coords.value.latitude && coords.value.longitude) {
@@ -80,21 +86,26 @@ export const useMapStore = defineStore('map', () => {
 
   function setMarker(e: Latlng) {
     if (marker.value) {
+      const popup = marker.value.getPopup()
+      const content = popup?.getContent() as ContainerWithCleanup
+      content?._cleanup?.()
       map.value.removeLayer(marker.value)
     }
 
     const container = document.createElement('div')
-    const app = createApp(NewPopupComponent, {
-      lat: Number(e.lat),
-      lng: Number(e.lng),
-    })
+    createPopupApp(
+      NewPopupComponent,
+      {
+        lat: Number(e.lat),
+        lng: Number(e.lng),
+      },
+      container,
+    )
 
     latLng.value = {
       lat: e.lat,
       lng: e.lng,
     }
-    app.use(sharedVuetify)
-    app.mount(container)
 
     marker.value = L.marker(e, { icon: addPosition }).setLatLng(e).addTo(map.value)
 
@@ -104,6 +115,9 @@ export const useMapStore = defineStore('map', () => {
   function createExistingMarkers() {
     if (existingMarkers.value) {
       existingMarkers.value.forEach((m) => {
+        const popup = m.circle.getPopup()
+        const content = popup?.getContent() as ContainerWithCleanup
+        content?._cleanup?.()
         map.value.removeLayer(m.marker)
         map.value.removeLayer(m.circle)
       })
@@ -124,23 +138,25 @@ export const useMapStore = defineStore('map', () => {
         }).addTo(map.value)
 
         const container = document.createElement('div')
-        const app = createApp(ExistingPopupComponent, {
-          id: e.id,
-          title: e.title,
-          chill_level: e.chill_level,
-          description: e.description,
-          visiting: e.visiting,
-          vibe: e.vibe,
-          accessibility: e.accessibility,
-          imageUrl: e.image_url,
-          latitude: Number(e.latitude),
-          longitude: Number(e.longitude),
-          userId: e.user_id,
-          approved: e.approved,
-        })
+        createPopupApp(
+          ExistingPopupComponent,
+          {
+            id: e.id,
+            title: e.title,
+            chill_level: e.chill_level,
+            description: e.description,
+            visiting: e.visiting,
+            vibe: e.vibe,
+            accessibility: e.accessibility,
+            imageUrl: e.image_url,
+            latitude: Number(e.latitude),
+            longitude: Number(e.longitude),
+            userId: e.user_id,
+            approved: e.approved,
+          },
+          container,
+        )
 
-        app.use(sharedVuetify)
-        app.mount(container)
         circle.bindPopup(container, {
           minWidth: 250,
           maxWidth: 300,
@@ -163,6 +179,9 @@ export const useMapStore = defineStore('map', () => {
     const markerObj = existingMarkers.value?.find((m) => m.data.id === id)
 
     if (markerObj && map.value) {
+      const popup = markerObj.circle.getPopup()
+      const content = popup?.getContent() as ContainerWithCleanup
+      content?._cleanup?.()
       map.value.removeLayer(markerObj.marker)
       map.value.removeLayer(markerObj.circle)
       map.value.closePopup()

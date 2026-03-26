@@ -43,7 +43,7 @@ export interface ExistingMarker {
 export interface Alert {
   icon: string
   title: string
-  id: number
+  id: number | string
   message: string
   duration: number
 }
