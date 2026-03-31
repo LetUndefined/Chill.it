@@ -7,10 +7,11 @@ import { computed } from 'vue'
 import { notify } from '@/services/alert'
 import { useAdminStore } from '@/stores/AdminStore'
 import { useSupaStore } from '@/stores/supaBase'
+import { getCurrentPosition } from '@/services/geolocation'
 
 const mapStore = useMapStore()
-const { createWaypoint, deleteExistingMarker } = mapStore
-const { map } = storeToRefs(mapStore)
+const { createWaypoint, deleteExistingMarker, callMap } = mapStore
+const { map, coords } = storeToRefs(mapStore)
 
 const adminStore = useAdminStore()
 const { isAdmin } = storeToRefs(adminStore)
@@ -33,25 +34,19 @@ const props = defineProps<{
 }>()
 
 const createRoute = async () => {
+  coords.value = await getCurrentPosition()
   await router.push('/')
 
-  let attempts = 0
-  const maxAttempts = 10
-
-  const checkMap = () => {
-    if (map.value) {
-      createWaypoint(props.latitude, props.longitude)
-      notify('Success', 'Navigation started', 3000)
-    } else if (attempts < maxAttempts) {
-      attempts++
-      setTimeout(checkMap, 100)
-    } else {
-      console.error('Map failed to initialize')
-      notify('Warning', 'Routing Failed, Try Again', 3000)
-    }
+  if (!map.value) {
+    callMap()
   }
 
-  checkMap()
+  if (map.value) {
+    createWaypoint(props.latitude, props.longitude)
+    notify('Success', 'Navigation started', 3000)
+  } else {
+    notify('Warning', 'Map initialization failed', 3000)
+  }
 }
 
 const conversion = computed(() => {

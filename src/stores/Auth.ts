@@ -1,14 +1,20 @@
 import { defineStore } from 'pinia'
-import { ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { supabase } from './supaBase'
 import { notify } from '@/services/alert'
+import router from '@/router'
 
 export const useAuthStore = defineStore('auth', () => {
   const email: Ref<string> = ref('')
   const password: Ref<string> = ref('')
   const confirmedPassword: Ref<string> = ref('')
+  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
 
   async function signUp() {
+    if (!regex.test(password.value)) {
+      return notify('Error', 'Password does not meet requirements', 3000)
+    }
+
     if (password.value !== confirmedPassword.value) {
       return notify('Error', 'Incorrect Password', 3000)
     }
@@ -20,7 +26,8 @@ export const useAuthStore = defineStore('auth', () => {
       console.error(`Failed signing up: ${error}`)
       return false
     }
-    return true
+
+    return (notify('Success', 'Account created!', 3000), router.push('/login'))
   }
 
   async function signIn() {
