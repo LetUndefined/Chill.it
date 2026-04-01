@@ -20,7 +20,9 @@ const loading = ref(true)
 onMounted(async () => {
   try {
     coords.value = await getCurrentPosition()
-    callMap()
+    if (!map.value) {
+      callMap()
+    }
     map.value.on('click', (e: L.LeafletMouseEvent) => setMarker(e.latlng))
     await fetchData()
     createExistingMarkers()

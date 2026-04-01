@@ -4,19 +4,13 @@ import { Mail, Lock, ArrowBigLeftDash } from 'lucide-vue-next'
 import router from '@/router'
 import { useAuthStore } from '@/stores/Auth'
 import { storeToRefs } from 'pinia'
-import { notify } from '@/services/alert'
 
 const authStore = useAuthStore()
 const { signUp } = authStore
 const { email, password, confirmedPassword } = storeToRefs(authStore)
 
 const handleSignUp = async () => {
-  const success = await signUp()
-  if (success) {
-    router.push('/login')
-  } else {
-    notify('Error', 'Check Email and Password', 3000)
-  }
+  await signUp()
 }
 </script>
 
