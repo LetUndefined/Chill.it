@@ -41,7 +41,7 @@ function notify(title: string, message: string, duration: number) {
   return randomId
 }
 
-function removeAlert(id: number) {
+function removeAlert(id: number | string) {
   const index = alertArray.value.findIndex((e) => e.id === id)
   console.log(index)
   alertArray.value.splice(index, 1)
