@@ -79,59 +79,94 @@ watch(
 
 <style scoped>
 .card-container {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 :deep(.v-expansion-panel) {
-  border-radius: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  border: 1px solid #222;
+  background-color: #111;
   color: var(--white);
-  font-size: 0.9rem;
+  font-size: 0.938rem;
+  box-shadow: none;
+}
+
+:deep(.v-expansion-panel-title) {
+  font-weight: 600;
+  font-size: 0.938rem;
 }
 
 .detail-container {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
+  padding: 1rem 0 0.5rem;
 }
 
 .detail-item {
   display: flex;
+  flex-direction: column;
   gap: 0.25rem;
 }
 
 .detail-item span {
-  text-transform: capitalize;
-  font-weight: 900;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.688rem;
+  letter-spacing: 0.05em;
+}
+
+.detail-item p {
+  margin: 0;
+  color: var(--white);
+  font-size: 0.938rem;
 }
 
 .item-image {
   display: flex;
   flex: 1;
+  margin-top: 0.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:deep(.v-img) {
+  border-radius: 8px;
 }
 
 .buttons {
   display: flex;
-  justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
 .buttons > * {
-  padding: 0.25rem 0.5rem;
-  border-radius: 20px;
+  flex: 1;
+  padding: 0.875rem;
+  border-radius: 8px;
   color: var(--white);
   text-transform: uppercase;
-  font-weight: 900;
-  box-shadow: var(--box-shadow-sm);
+  font-weight: 700;
+  font-size: 0.813rem;
+  letter-spacing: 0.03em;
+  border: none;
+  cursor: pointer;
 }
 
 .approve {
-  background-color: rgb(12, 145, 0);
+  background-color: #16a34a;
+}
+
+.approve:active {
+  background-color: #15803d;
 }
 
 .reject {
-  background-color: rgb(240, 71, 5);
+  background-color: #dc2626;
+}
+
+.reject:active {
+  background-color: #b91c1c;
 }
 </style>

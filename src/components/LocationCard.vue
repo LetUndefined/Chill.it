@@ -125,13 +125,19 @@ function handleDelete(id: string) {
   position: relative;
   border-radius: 20px;
   height: 100%;
-  box-shadow: var(--box-shadow-xl);
+  background-color: #111;
+  border: 1px solid #222;
 }
 
 .v-card-title,
 .v-card-text {
   padding: 0;
   margin: 1rem 0 1.5rem 0;
+  color: var(--white);
+}
+
+.v-card-text {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .card-content {
@@ -152,50 +158,71 @@ function handleDelete(id: string) {
 .chip-content {
   display: flex;
   align-items: center;
-  background-color: var(--white);
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
   border-radius: 20px;
   position: absolute;
   padding: 0.25rem 0.5rem;
   top: 10px;
   right: 10px;
   gap: 0.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .chip-content h4 {
   margin-right: 0.25rem;
   font-weight: 300;
+  color: var(--white);
 }
 
 .text p {
   font-size: 14px;
+  color: var(--white);
+}
+
+.text h4 {
+  color: var(--white);
 }
 
 .buttons {
   display: flex;
-  padding: 1rem;
-  gap: 1rem;
-  justify-content: center;
   flex-direction: column;
+  padding: 1rem;
+  gap: 0.75rem;
   margin: 0 1rem 1rem 1rem;
 }
 
 .buttons .navigate {
-  padding: 0.5rem 0.75rem;
+  padding: 0.875rem;
   text-transform: uppercase;
-  border-radius: 20px;
-  box-shadow: 0px 2px 3px 0px var(--black);
-  background: var(--primary-color);
-  color: var(--white);
-  font-weight: 600;
+  border-radius: 8px;
+  background-color: var(--white);
+  color: #000;
+  font-weight: 700;
+  font-size: 0.813rem;
+  letter-spacing: 0.03em;
+  border: none;
+}
+
+.buttons .navigate:active {
+  opacity: 0.7;
 }
 
 .buttons .delete {
-  padding: 0.5rem 0.75rem;
+  padding: 0.875rem;
   text-transform: uppercase;
-  border-radius: 20px;
-  box-shadow: 0px 2px 3px 0px var(--black);
-  background: var(--destructive);
+  border-radius: 8px;
+  background-color: #dc2626;
   color: var(--white);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.813rem;
+  letter-spacing: 0.03em;
+  border: none;
+  align-self: center;
+  width: 60%;
+}
+
+.buttons .delete:active {
+  background-color: #b91c1c;
 }
 </style>
