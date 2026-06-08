@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ExpansianPanel from '@/components/ExpansianPanel.vue'
+import ExpansianPanel from '@/components/ExpansionPanel.vue'
 import { computed, onMounted, ref } from 'vue'
 import { useAdminStore } from '@/stores/AdminStore'
 import { storeToRefs } from 'pinia'
@@ -82,88 +82,123 @@ onMounted(async () => {
 .container {
   display: flex;
   flex-direction: column;
-  background-color: var(--black);
-  min-height: 100%;
-  padding: 2rem 0;
+  background-color: #0a0a0a;
+  min-height: 100vh;
+  padding: 0;
 }
+
 .title {
   display: flex;
   align-items: center;
   flex-direction: column;
+  padding: 1.5rem 1rem 1rem;
+  background-color: #111;
+  border-bottom: 1px solid #222;
 }
 
 .title h1 {
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-size: 1.75rem;
+  font-weight: 700;
   color: var(--white);
-  position: relative;
-  padding-bottom: 0.5rem;
-  margin-top: 1rem;
+  margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .title span {
-  border-bottom: 1px solid;
+  border-bottom: none;
 }
 
 .title p {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.6);
   margin: 0.5rem 0 0 0;
-  letter-spacing: 0.02em;
   text-align: center;
-  max-width: 350px;
 }
 
 .dashboard-content {
-  background-color: rgb(103, 101, 101);
+  background-color: transparent;
   min-height: 100vh;
-  border-radius: 20px;
-}
-
-.title {
-  margin-top: 2rem;
+  border-radius: 0;
+  padding: 0;
 }
 
 .approvals {
-  margin: 1rem;
-  height: 500px;
+  margin: 0;
+  height: auto;
+  min-height: 60vh;
+  padding: 1rem;
 }
 
 .text h4 {
-  margin: 0 0rem 0.5rem 0.5rem;
-  color: var(--green);
-  text-shadow: 0px 1px var(--black);
+  margin: 0 0 1rem 0;
+  color: var(--white);
+  font-size: 1.125rem;
+  font-weight: 600;
 }
 
 .table-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0;
   overflow-y: auto;
   height: 100%;
-  box-shadow: 0px 2px 5px var(--white);
-  border-radius: 20px;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  gap: 0.75rem;
+}
+
+.no-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: rgba(255, 255, 255, 0.4);
+  background-color: #111;
+  border-radius: 12px;
+}
+
+.no-items h4 {
+  font-size: 0.938rem;
+  font-weight: 500;
 }
 
 .item-text {
   display: flex;
   justify-content: space-between;
-  margin: 0rem 0.5rem 1rem;
+  align-items: center;
+  margin: 0 0 1rem;
+}
+
+.item-text h4 {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
 }
 
 .approval-details {
-  margin-top: 4rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 0 1rem;
 }
 
 .openAll {
-  background-color: var(--primary-color);
-  padding: 0.5rem 0.75rem;
-  border-radius: 20px;
+  background-color: var(--white);
+  color: #000;
+  padding: 0.5rem 0.875rem;
+  border-radius: 8px;
   font-weight: 600;
-  box-shadow: 0px 0px 8px -2px black;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 0.688rem;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+}
+
+.openAll:active {
+  opacity: 0.7;
 }
 </style>

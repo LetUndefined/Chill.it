@@ -75,47 +75,48 @@ const markers = computed(() => {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--gradient-bg);
+  background-color: #0a0a0a;
   overflow-y: auto;
-  padding-bottom: 2rem;
+  padding-bottom: 0;
 }
 
 .title {
   display: flex;
   align-items: center;
-  margin: 5rem 0 0 0;
+  padding: 1.5rem 1rem 1rem;
   justify-content: center;
   flex-direction: column;
+  background-color: #111;
+  border-bottom: 1px solid #222;
 }
 
 .title h1 {
-  font-size: 2.5rem;
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin: 0;
-  color: var(--primary-color);
-  position: relative;
-  padding-bottom: 0.5rem;
+  color: var(--white);
+  padding-bottom: 0;
 }
 
 .title span {
-  border-bottom: 1px solid;
+  border-bottom: none;
 }
 
 .title p {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 400;
-  color: rgba(96, 92, 92, 0.795);
+  color: rgba(255, 255, 255, 0.6);
   margin: 0.5rem 0 0 0;
-  letter-spacing: 0.02em;
   text-align: center;
-  max-width: 350px;
+  max-width: 300px;
 }
 
 .filters {
   display: flex;
   justify-content: center;
-  margin: 1rem;
+  padding: 1rem;
+  background-color: #0a0a0a;
 }
 
 .distance {
@@ -124,10 +125,19 @@ const markers = computed(() => {
 }
 
 :deep(.v-field) {
-  border: 2px solid rgba(95, 93, 93, 0.544);
-  border-radius: 20px;
-  color: var(--black);
-  font-size: 0.9rem;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background-color: #111;
+  color: var(--white);
+  font-size: 0.938rem;
+}
+
+:deep(.v-field__input) {
+  color: var(--white);
+}
+
+:deep(.v-label) {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 .card-container {
@@ -135,21 +145,33 @@ const markers = computed(() => {
   flex: 1;
   justify-content: center;
   align-items: center;
+  padding: 0;
 }
 
 :deep(.v-btn--icon) {
-  background-color: rgba(85, 133, 181, 0.4);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+}
+
+:deep(.v-btn--icon:active) {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 :deep(.card-content) {
-  padding: 1rem 1rem 0 2rem;
+  padding: 1rem 1rem 0 1rem;
 }
 
 :deep(.v-responsive__content) {
   display: flex;
   justify-content: center;
-  padding-bottom: 2rem;
+  padding: 0 1rem 1rem;
+}
+
+:deep(.v-carousel) {
+  width: 100%;
+}
+
+:deep(.v-carousel-item) {
+  width: 100%;
 }
 </style>

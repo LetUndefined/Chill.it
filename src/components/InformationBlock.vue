@@ -29,37 +29,49 @@ const props = defineProps<{
 .item-container {
   display: flex;
   justify-content: center;
-  padding: 1rem;
-  border-radius: 20px;
-  gap: 1rem;
+  padding: 0;
+  gap: 0.75rem;
 }
+
 .item-detail {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
+  background-color: #111;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 6rem;
-  width: 10rem;
+  align-items: center;
+  height: 5.5rem;
+  flex: 1;
   text-align: center;
-  box-shadow: 0px 1px 2px var(--white);
   gap: 0.5rem;
+  border: 1px solid #222;
 }
 
 .item-detail h4 {
   text-transform: uppercase;
-  color: var(--white);
-  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.688rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin: 0;
 }
 
 .item-detail span {
-  font-weight: 900;
-  font-size: 30px;
+  font-weight: 700;
+  font-size: 1.75rem;
   color: var(--white);
-  text-shadow: 0px 1px var(--black);
+  line-height: 1;
+}
+
+.item-detail:nth-child(2) span {
+  color: #16a34a;
+}
+
+.item-detail:nth-child(3) span {
+  color: #dc2626;
 }
 
 .item-detail #denied {
-  color: rgb(231, 84, 84);
+  color: #dc2626;
 }
 </style>
