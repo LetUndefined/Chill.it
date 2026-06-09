@@ -10,9 +10,9 @@ const { coords, existingMarkers } = storeToRefs(mapStore)
 const supaStore = useSupaStore()
 const { fetchedData } = storeToRefs(supaStore)
 
-export const distance: Ref<number | string> = ref('All')
+export const distance: Ref<string> = ref('All')
 
-export function markersInRange(value: number | string) {
+export function markersInRange(value: string) {
   if (!coords.value.latitude || !coords.value.longitude) return []
 
   const userLatLng = L.latLng(coords.value.latitude, coords.value.longitude)
@@ -26,6 +26,7 @@ export function markersInRange(value: number | string) {
     })
     .filter((e) => {
       if (value === 'All') return true
-      else return e.distance < Number(value) * 1000
+      const distanceValue = parseInt(value)
+      return e.distance < distanceValue * 1000
     })
 }

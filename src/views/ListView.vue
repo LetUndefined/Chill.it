@@ -42,12 +42,15 @@ const markers = computed(() => {
       <div class="distance">
         <v-select
           label="Distance"
-          :items="['All', 5, 10, 15, 20, 25]"
+          :items="['All', '5 km', '10 km', '15 km', '20 km', '25 km']"
           variant="solo"
           v-model="distance"
         ></v-select>
       </div>
     </section>
+    <div v-if="markers?.length === 0" class="no-marker-container">
+      <p class="fallback">No nearby locations</p>
+    </div>
     <section class="card-container">
       <v-carousel v-if="fetchedData && fetchedData.length > 0" hide-delimiters height="100%">
         <v-carousel-item v-for="(location, index) in markers" :key="index">
@@ -173,5 +176,16 @@ const markers = computed(() => {
 
 :deep(.v-carousel-item) {
   width: 100%;
+}
+
+.fallback {
+  color: rgb(146, 146, 146);
+  text-transform: capitalize;
+  border-bottom: 1px solid rgb(146, 146, 146);
+}
+
+.no-marker-container {
+  display: flex;
+  justify-content: center;
 }
 </style>
